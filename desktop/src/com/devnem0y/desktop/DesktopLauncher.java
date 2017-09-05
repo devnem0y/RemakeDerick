@@ -15,6 +15,7 @@ public class DesktopLauncher {
 		config.backgroundFPS = APP_FPS;
 		config.foregroundFPS = APP_FPS;
 		config.resizable = false;
+		config.fullscreen = false;
 		new LwjglApplication(new Application(), config);
 	}
 }
