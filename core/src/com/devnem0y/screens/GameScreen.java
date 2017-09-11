@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
 import com.devnem0y.managers.GameScreenManager;
+import com.devnem0y.managers.LanguagesManager;
 
 import static com.devnem0y.utils.Constants.APP_HEIGHT;
 import static com.devnem0y.utils.Constants.APP_SCREEN_HEIGHT;
@@ -21,6 +22,12 @@ public class GameScreen extends AbstractScreen {
 
     private Controller controller;
 
+    private LanguagesManager lang;
+
+    String option1 = lang.getString("Timetrial mode");
+    String option2 = lang.getString("How to play");
+    String option3 = lang.getString("Exit");
+
     public GameScreen(final Application app) {
         super(app);
         widget = new OrthographicCamera();
@@ -29,6 +36,8 @@ public class GameScreen extends AbstractScreen {
         stageW.setViewport(new FitViewport(APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT, widget));
 
         controller = new Controller();
+
+        lang = LanguagesManager.getInstance();
     }
 
     @Override
@@ -58,7 +67,8 @@ public class GameScreen extends AbstractScreen {
         app.batch.setProjectionMatrix(widget.combined);
         app.batch.begin();
         fontLog.draw(app.batch, "press BACKSPACE return MenuScreen", 10, APP_HEIGHT - 10);
-        fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 25);
+        //fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 25);
+        fontLog.draw(app.batch, option3, 10, APP_HEIGHT - 25);
         app.batch.end();
         stageW.draw();
     }

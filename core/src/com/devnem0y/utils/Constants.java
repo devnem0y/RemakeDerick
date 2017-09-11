@@ -1,6 +1,7 @@
 package com.devnem0y.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.devnem0y.managers.LanguagesManager;
 
 public class Constants {
 
