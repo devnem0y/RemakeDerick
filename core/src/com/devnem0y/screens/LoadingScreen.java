@@ -53,7 +53,7 @@ public class LoadingScreen extends AbstractScreen{
     }
 
     private void queueAssets() {
-		app.assetManager.load("logo.png", Texture.class);
+		app.assetManager.load("image/logo.png", Texture.class);
         app.assetManager.finishLoading();
     }
 

@@ -33,7 +33,7 @@ public class SplashScreen extends AbstractScreen{
             }
         };
 
-        Texture logo = app.assetManager.get("logo.png", Texture.class);
+        Texture logo = app.assetManager.get("image/logo.png", Texture.class);
         splashImg = new Image(logo);
         splashImg.setPosition(APP_WIDTH / 2 - logo.getWidth() / 2, APP_HEIGHT / 2 - logo.getHeight() / 2);
         splashImg.addAction(sequence(alpha(0), fadeIn(3f), delay(0.7f), fadeOut(2f), run(transitionRunnable)));
