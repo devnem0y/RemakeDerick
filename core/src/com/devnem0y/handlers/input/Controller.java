@@ -14,10 +14,8 @@ import com.devnem0y.utils.Constants;
 
 public class Controller {
 
-    private Button btnBit, btnShotgun;
-    private Button.ButtonStyle btnBitStyle, btnShotgunStyle;
     public Group joyGroup;
-    private Skin skin, touchpadSkin;
+    private Skin skin;
     private Touchpad touchpad;
 
     public Controller() {
@@ -26,21 +24,18 @@ public class Controller {
 
     private void initJoy() {
         skin = new Skin();
-        skin.addRegions(new TextureAtlas(Gdx.files.internal("image/btnAttack.atlas")));
+        skin.addRegions(new TextureAtlas(Gdx.files.internal("image/atlas/controller.atlas")));
     }
 
     private void createStick(Stage stage) {
-        touchpadSkin = new Skin();
-        touchpadSkin.addRegions(new TextureAtlas(Gdx.files.internal("image/joystick.atlas")));
-
         Touchpad.TouchpadStyle touchpadStyle = new Touchpad.TouchpadStyle();
-        Drawable touchBackground = touchpadSkin.getDrawable("touchBackground");
-        Drawable touchKnob = touchpadSkin.getDrawable("touchKnob");
+        Drawable touchBackground = skin.getDrawable("stick");
+        Drawable touchKnob = skin.getDrawable("knob");
         touchpadStyle.background = touchBackground;
         touchpadStyle.knob = touchKnob;
 
         touchpad = new Touchpad(10, touchpadStyle);
-        touchpad.setBounds(15, 15, 150, 150);
+        touchpad.setBounds(15, 15, 200, 200);
 
         stage.addActor(touchpad);
     }
@@ -53,34 +48,14 @@ public class Controller {
         joyGroup = new Group();
         joyGroup.setPosition(0, -270);
 
-        btnBitStyle = new Button.ButtonStyle();
-        btnBitStyle.down = skin.getDrawable("bitDown");
-        btnBitStyle.up = skin.getDrawable("bitUp");
+        Button.ButtonStyle btnBitStyle = new Button.ButtonStyle();
+        btnBitStyle.down = skin.getDrawable("btnDown");
+        btnBitStyle.up = skin.getDrawable("btnUp");
 
-        btnBit = new Button(btnBitStyle);
-        btnBit.setSize(100, 100);
-        btnBit.setPosition(Constants.APP_WIDTH - 150, 50);
+        Button btnBit = new Button(btnBitStyle);
+        btnBit.setSize(160, 160);
+        btnBit.setPosition(Constants.APP_SCREEN_WIDTH - 175, 25);
         btnBit.addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
-                //GameScreen.idButton = 2;
-                return true;
-            }
-
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                //GameScreen.idButton = 0;
-                Gdx.app.log("my app", "Released");
-            }
-        });
-
-        btnShotgunStyle = new Button.ButtonStyle();
-        btnShotgunStyle.down = skin.getDrawable("shotgunDown");
-        btnShotgunStyle.up = skin.getDrawable("shotgunUp");
-
-        btnShotgun = new Button(btnShotgunStyle);
-        btnShotgun.setSize(100, 100);
-        btnShotgun.setPosition(Constants.APP_WIDTH + 450, 50);
-        btnShotgun.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
                 //GameScreen.idButton = 2;
@@ -97,7 +72,6 @@ public class Controller {
 
         joyGroup.addActor(touchpad);
         joyGroup.addActor(btnBit);
-        joyGroup.addActor(btnShotgun);
         stage.addActor(joyGroup);
     }
 }

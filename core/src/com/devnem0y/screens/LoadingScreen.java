@@ -35,7 +35,7 @@ public class LoadingScreen extends AbstractScreen{
         super.update(delta);
         progress = MathUtils.lerp(progress, app.assetManager.getProgress(), 0.1f);
         if (app.assetManager.update() && progress >= app.assetManager.getProgress() - 0.001f) {
-            app.gsm.setScreen(GameScreenManager.STATE.SPLASH);
+            app.gsm.setScreen(GameScreenManager.STATE.MENU);
         }
     }
 
