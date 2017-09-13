@@ -1,0 +1,33 @@
+
+controller.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+stick
+  rotate: false
+  xy: 2, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+btnDown
+  rotate: false
+  xy: 204, 38
+  size: 164, 164
+  orig: 164, 164
+  offset: 0, 0
+  index: -1
+btnUp
+  rotate: false
+  xy: 370, 38
+  size: 164, 164
+  orig: 164, 164
+  offset: 0, 0
+  index: -1
+knob
+  rotate: false
+  xy: 536, 142
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
