@@ -4,7 +4,6 @@ import com.devnem0y.Application;
 import com.devnem0y.screens.AbstractScreen;
 import com.devnem0y.screens.GameScreen;
 import com.devnem0y.screens.LoadingScreen;
-import com.devnem0y.screens.MenuScreen;
 import com.devnem0y.screens.SplashScreen;
 
 import java.util.HashMap;
@@ -17,7 +16,6 @@ public class GameScreenManager {
     public enum STATE {
         LOADING,
         SPLASH,
-        MENU,
         GAME,
     }
 
@@ -31,7 +29,6 @@ public class GameScreenManager {
         this.gameScreens = new HashMap<STATE, AbstractScreen>();
         this.gameScreens.put(STATE.LOADING, new LoadingScreen(app));
         this.gameScreens.put(STATE.SPLASH, new SplashScreen(app));
-        this.gameScreens.put(STATE.MENU, new MenuScreen(app));
         this.gameScreens.put(STATE.GAME, new GameScreen(app));
     }
 

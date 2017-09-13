@@ -29,7 +29,7 @@ public class SplashScreen extends AbstractScreen{
         Runnable transitionRunnable = new Runnable() {
             @Override
             public void run() {
-                app.gsm.setScreen(GameScreenManager.STATE.MENU);
+                app.gsm.setScreen(GameScreenManager.STATE.GAME);
             }
         };
 

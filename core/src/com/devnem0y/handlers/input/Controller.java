@@ -17,6 +17,7 @@ public class Controller {
     public Group joyGroup;
     private Skin skin;
     private Touchpad touchpad;
+    private boolean btnAttackInput;
 
     public Controller() {
         initJoy();
@@ -58,12 +59,12 @@ public class Controller {
         btnBit.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
-                //GameScreen.idButton = 2;
+                btnAttackInput = true;
                 return true;
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                //GameScreen.idButton = 0;
+                btnAttackInput = false;
                 Gdx.app.log("my app", "Released");
             }
         });
@@ -73,5 +74,9 @@ public class Controller {
         joyGroup.addActor(touchpad);
         joyGroup.addActor(btnBit);
         stage.addActor(joyGroup);
+    }
+
+    public boolean isBtnAttackInput() {
+        return btnAttackInput;
     }
 }

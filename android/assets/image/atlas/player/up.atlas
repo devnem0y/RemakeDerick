@@ -1,0 +1,40 @@
+
+up.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame
+  rotate: false
+  xy: 2, 2
+  size: 22, 45
+  orig: 22, 45
+  offset: 0, 0
+  index: 0
+frame
+  rotate: false
+  xy: 2, 2
+  size: 22, 45
+  orig: 22, 45
+  offset: 0, 0
+  index: 1
+frame
+  rotate: false
+  xy: 26, 2
+  size: 22, 45
+  orig: 22, 45
+  offset: 0, 0
+  index: 2
+frame
+  rotate: false
+  xy: 50, 2
+  size: 22, 45
+  orig: 22, 45
+  offset: 0, 0
+  index: 3
+frame
+  rotate: false
+  xy: 50, 2
+  size: 22, 45
+  orig: 22, 45
+  offset: 0, 0
+  index: 4
