@@ -60,7 +60,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        app.batch.setProjectionMatrix(widget.combined);
+        //app.batch.setProjectionMatrix(widget.combined);
         app.batch.begin();
         gameStateRender(delta, app.batch);
         fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 10);

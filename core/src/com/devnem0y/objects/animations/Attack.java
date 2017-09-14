@@ -8,7 +8,7 @@ public class Attack implements AnimStateMachine {
 
     @Override
     public void running(GameObject context, SpriteBatch batch, float delta) {
-        batch.draw((TextureRegion) context.getAnimPAttack().getKeyFrame(delta), context.getBounds().getX(), context.getBounds().getY() + 3.5f);
+        batch.draw((TextureRegion) context.getAnimPAttack().getKeyFrame(delta), context.getBounds().getX(), context.getBounds().getY() + 2.2f);
         System.out.println("ATTACK");
     }
 }
