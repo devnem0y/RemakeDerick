@@ -60,10 +60,10 @@ public class Player extends GameObject {
                     if (controller.getTouchpad().getKnobY() > posY) setState(new Up());
                     else if (controller.getTouchpad().getKnobY() < posY) setState(new Down());
                 }
-            } else if (controller.getTouchpad().getKnobX() > posX) {
+            } else if (controller.getTouchpad().getKnobX() > posX + 35) {
                 if (controller.isBtnAttackInput()) setState(new AttackRight());
                 else setState(new Right());
-            } else if (controller.getTouchpad().getKnobX() < posX) {
+            } else if (controller.getTouchpad().getKnobX() < posX - 35) {
                 if (controller.isBtnAttackInput()) setState(new AttackLeft());
                 else setState(new Left());
             }

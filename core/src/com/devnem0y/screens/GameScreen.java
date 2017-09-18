@@ -10,24 +10,23 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
 import com.devnem0y.objects.Player;
+import com.devnem0y.objects.PlayerBase;
 import com.devnem0y.utils.GameState;
 
 import static com.devnem0y.utils.Constants.*;
 
 public class GameScreen extends AbstractScreen {
 
-    private OrthographicCamera widget;
     private Stage stageW;
-
-    private Controller controller;
-
     private GameState gameState;
 
+    private Controller controller;
     private Player player;
+    private PlayerBase playerBase;
 
     public GameScreen(final Application app) {
         super(app);
-        widget = new OrthographicCamera();
+        OrthographicCamera widget = new OrthographicCamera();
         widget.setToOrtho(false, APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT);
         stageW = new Stage();
         stageW.setViewport(new FitViewport(APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT, widget));
@@ -39,9 +38,10 @@ public class GameScreen extends AbstractScreen {
         System.out.println("GAME");
         stageW.clear();
         controller = new Controller();
-        controller.createJoy(stageW);
+        controller.initialization(stageW);
         player = new Player(controller);
         player.spawn(null, null, null, null, null);
+        playerBase = new PlayerBase();
         Gdx.input.setInputProcessor(stageW);
 
         gameState = GameState.MENU;
@@ -51,16 +51,18 @@ public class GameScreen extends AbstractScreen {
     public void update(float delta) {
         super.update(delta);
         stageW.act(delta);
-        controller.joyGroup.addAction(Actions.moveTo(0, 0, 0.7f));
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            if (gameState != GameState.PAUSE) gameState = GameState.PAUSE;
+            else gameState = GameState.PLAY;
         }
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        //app.batch.setProjectionMatrix(widget.combined);
         app.batch.begin();
         gameStateRender(delta, app.batch);
         fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 10);
@@ -71,13 +73,30 @@ public class GameScreen extends AbstractScreen {
     private void gameStateRender(float delta, SpriteBatch batch) {
         switch (gameState) {
             case MENU:
-                gameState = GameState.PLAY;
+                gameState = GameState.SCREENSAVER;
+                break;
+            case SCREENSAVER:
+                playerBase.update(delta);
+                playerBase.render(app.batch, delta);
+                //gameState = GameState.PLAY;
                 break;
             case PLAY:
+                controller.group.addAction(Actions.moveTo(0, 0, 0.7f));
                 player.update(delta);
                 player.render(batch, delta);
                 break;
             case PAUSE:
+                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                player.render(batch, delta);
+                break;
+            case BOSS_SCREENSAVER:
+                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                break;
+            case WIN:
+                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                break;
+            case GAME_OVER:
+                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
                 break;
             default:
                 break;
@@ -110,5 +129,6 @@ public class GameScreen extends AbstractScreen {
         super.dispose();
         stageW.dispose();
         if (player != null) player.dispose();
+        if (playerBase != null) playerBase.dispose();
     }
 }

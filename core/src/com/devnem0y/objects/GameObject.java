@@ -19,39 +19,39 @@ public abstract class GameObject {
     private void animInit() {
         if (atlasPDeath == null) {
             atlasPDeath = new TextureAtlas("image/atlas/player/death.atlas");
-            animPDeath = new Animation<TextureRegion>(1f/5f, atlasPDeath.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPDeath = new Animation<TextureRegion>(1f/10f, atlasPDeath.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPIdle == null) {
             atlasPIdle = new TextureAtlas("image/atlas/player/idle.atlas");
-            animPIdle = new Animation<TextureRegion>(1f / 5f, atlasPIdle.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPIdle = new Animation<TextureRegion>(1f/10f, atlasPIdle.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPUp == null) {
             atlasPUp = new TextureAtlas("image/atlas/player/up.atlas");
-            animPUp = new Animation<TextureRegion>(1f/5f, atlasPUp.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPUp = new Animation<TextureRegion>(1f/10f, atlasPUp.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPDown == null) {
             atlasPDown = new TextureAtlas("image/atlas/player/down.atlas");
-            animPDown = new Animation<TextureRegion>(1f/5f, atlasPDown.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPDown = new Animation<TextureRegion>(1f/10f, atlasPDown.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPRight == null) {
             atlasPRight = new TextureAtlas("image/atlas/player/right.atlas");
-            animPRight = new Animation<TextureRegion>(1f/5f, atlasPRight.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPRight = new Animation<TextureRegion>(1f/10f, atlasPRight.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPLeft == null) {
             atlasPLeft = new TextureAtlas("image/atlas/player/left.atlas");
-            animPLeft = new Animation<TextureRegion>(1f/5f, atlasPLeft.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPLeft = new Animation<TextureRegion>(1f/10f, atlasPLeft.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPAttack == null) {
             atlasPAttack = new TextureAtlas("image/atlas/player/attack.atlas");
-            animPAttack = new Animation<TextureRegion>(1f/5f, atlasPAttack.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPAttack = new Animation<TextureRegion>(1f/10f, atlasPAttack.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPAttackRight == null) {
             atlasPAttackRight = new TextureAtlas("image/atlas/player/attackRight.atlas");
-            animPAttackRight = new Animation<TextureRegion>(1f/5f, atlasPAttackRight.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPAttackRight = new Animation<TextureRegion>(1f/10f, atlasPAttackRight.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPAttackLeft == null) {
             atlasPAttackLeft = new TextureAtlas("image/atlas/player/attackLeft.atlas");
-            animPAttackLeft = new Animation<TextureRegion>(1f/5f, atlasPAttackLeft.findRegions("frame"), Animation.PlayMode.LOOP);
+            animPAttackLeft = new Animation<TextureRegion>(1f/10f, atlasPAttackLeft.findRegions("frame"), Animation.PlayMode.LOOP);
         }
     }
 
