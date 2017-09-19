@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
+import com.devnem0y.managers.DialogManager;
 import com.devnem0y.objects.Player;
 import com.devnem0y.objects.PlayerBase;
 import com.devnem0y.utils.GameState;
@@ -20,6 +21,7 @@ public class GameScreen extends AbstractScreen {
     private Stage stageW;
     private GameState gameState;
 
+    private DialogManager dialogManager;
     private Controller controller;
     private Player player;
     private PlayerBase playerBase;
@@ -37,6 +39,7 @@ public class GameScreen extends AbstractScreen {
         super.show();
         System.out.println("GAME");
         stageW.clear();
+        dialogManager = new DialogManager(stageW);
         controller = new Controller();
         controller.initialization(stageW);
         player = new Player(controller);
@@ -64,6 +67,7 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         app.batch.begin();
+        dialogManager.render(app.batch);
         gameStateRender(delta, app.batch);
         fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 10);
         app.batch.end();
@@ -76,6 +80,7 @@ public class GameScreen extends AbstractScreen {
                 gameState = GameState.SCREENSAVER;
                 break;
             case SCREENSAVER:
+                dialogManager.messageBase.show("test text Проверка шрифтов");
                 playerBase.update(delta);
                 playerBase.render(app.batch, delta);
                 //gameState = GameState.PLAY;
