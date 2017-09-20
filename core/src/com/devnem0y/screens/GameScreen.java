@@ -86,7 +86,7 @@ public class GameScreen extends AbstractScreen {
                 dialogManager.messageBase2.show();
                 dialogManager.messagePlayer1.show();
                 dialogManager.messagePlayer2.show();
-                //gameState = GameState.PLAY;
+                if (dialogManager.getCurrentDialog() == 4) gameState = GameState.PLAY;
                 break;
             case PLAY:
                 controller.group.addAction(Actions.moveTo(0, 0, 0.7f));
