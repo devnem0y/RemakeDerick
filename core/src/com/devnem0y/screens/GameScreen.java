@@ -21,7 +21,7 @@ public class GameScreen extends AbstractScreen {
     private Stage stageW;
     private GameState gameState;
 
-    private DialogManager dialogManager;
+    public static DialogManager dialogManager;
     private Controller controller;
     private Player player;
     private PlayerBase playerBase;
@@ -80,9 +80,12 @@ public class GameScreen extends AbstractScreen {
                 gameState = GameState.SCREENSAVER;
                 break;
             case SCREENSAVER:
-                dialogManager.messageBase.show("test text Проверка шрифтов");
-                playerBase.update(delta);
-                playerBase.render(app.batch, delta);
+//                playerBase.update(delta);
+//                playerBase.render(app.batch, delta);
+                dialogManager.messageBase1.show();
+                dialogManager.messageBase2.show();
+                dialogManager.messagePlayer1.show();
+                dialogManager.messagePlayer2.show();
                 //gameState = GameState.PLAY;
                 break;
             case PLAY:

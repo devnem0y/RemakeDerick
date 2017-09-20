@@ -24,7 +24,7 @@ public class PlayerBase extends GameObject {
     @Override
     public void update(float delta) {
         if (bounds.getY() >= APP_HEIGHT - 380) {
-            System.out.println("stop");
+            //System.out.println("stop");
         } else {
             bounds.setY(bounds.getY() + velocity * delta);
         }

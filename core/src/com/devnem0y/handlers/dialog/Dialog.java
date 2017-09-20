@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.devnem0y.managers.DialogManager;
 
 import static com.devnem0y.utils.Constants.*;
 
@@ -23,10 +24,15 @@ public class Dialog {
     private Texture texture;
     private Button next;
     private BitmapFont fontLeader, fontText;
-    private String leader = null, text = null;
     private int align;
 
-    public Dialog(int width, int height, String leader, String text, int align, Stage stage) {
+    private float timer;
+    private int letterNumber;
+    private StringBuilder fullText;
+    private StringBuilder partText = new StringBuilder();
+    private boolean visible;
+
+    public Dialog(int width, int height, String text, boolean visible, int align, Stage stage) {
         frame = new Rectangle();
         frame.width = width;
         frame.height = height;
@@ -36,9 +42,9 @@ public class Dialog {
         fontText = new BitmapFont();
         initFont();
         initButtonExit(stage);
-        this.leader = leader;
-        this.text = text;
+        fullText = new StringBuilder(text);
         this.align = align;
+        this.visible = visible;
     }
 
     private void initFont() {
@@ -64,42 +70,34 @@ public class Dialog {
     }
 
     public void show() {
-        frame.setPosition(0, 0);
-        if (next != null) {
-            next.setPosition((frame.getX() + frame.getWidth()) - 90, frame.getY() + 2);
-        }
-    }
+        if (visible) {
+            frame.setPosition(0, 0);
+            if (next != null) {
+                next.setPosition((frame.getX() + frame.getWidth()) - 210, frame.getY() + 2);
+            }
 
-    public void show(String text) {
-        this.text = text;
-        frame.setPosition(0, 0);
-        if (next != null) {
-            next.setPosition((frame.getX() + frame.getWidth()) - 90, frame.getY() + 2);
-        }
-    }
-
-    public void show(String leader, String text) {
-        this.text = text;
-        this.leader = leader;
-        frame.setPosition(0, 0);
-        if (next != null) {
-            next.setPosition((frame.getX() + frame.getWidth()) - 90, frame.getY() + 2);
+            timer += Gdx.graphics.getDeltaTime();
+            if (letterNumber != fullText.length()) {
+                if (timer >= 0.12f) {
+                    timer = 0;
+                    partText.append(fullText.charAt(letterNumber++));
+                }
+            }
         }
     }
 
     public void hide() {
         frame.setPosition(-1000, 0);
         if (next != null) {
-            next.setPosition((frame.getX() + frame.getWidth()) - 90, frame.getY() + 2);
+            next.setPosition((frame.getX() + frame.getWidth()) - 210, frame.getY() + 2);
         }
+        visible = false;
     }
 
     public void draw(SpriteBatch batch) {
-        if (texture != null) batch.draw(texture, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
-        if (leader != null) {
-            fontLeader.draw(batch, leader, frame.getX() + 20, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 40, Align.center, true);
-            if (text != null) fontText.draw(batch, text, frame.getX() + 20, (frame.getY() + frame.getHeight() - 45), frame.getWidth() - 40, align, true);
-        } else if (text != null) fontText.draw(batch, text, frame.getX() + 72, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 92, align, true);
+        batch.draw(texture, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
+        fontText.draw(batch, partText, frame.getX() + 180, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 360, align, true);
+        fontText.draw(batch, "ДАЛЕЕ >>", APP_WIDTH - 200, 20);
     }
 
     private void initButtonExit(Stage stage) {
@@ -109,7 +107,7 @@ public class Dialog {
         exitStyle.down = skin.getDrawable("btn_next");
         exitStyle.up = skin.getDrawable("btn_next");
         next = new Button(exitStyle);
-        next.setPosition((frame.getX() + frame.getWidth()) - 250, frame.getY() + 2);
+        next.setPosition((frame.getX() + frame.getWidth()) - 210, frame.getY() + 2);
         next.addListener(new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -133,6 +131,14 @@ public class Dialog {
 
     public BitmapFont getFontText() {
         return fontText;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public void dispose() {
