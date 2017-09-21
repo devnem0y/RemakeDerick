@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
 import com.devnem0y.managers.DialogManager;
+import com.devnem0y.objects.Background;
 import com.devnem0y.objects.Player;
 import com.devnem0y.objects.PlayerBase;
 import com.devnem0y.utils.GameState;
@@ -23,6 +24,7 @@ public class GameScreen extends AbstractScreen {
 
     public static DialogManager dialogManager;
     private Controller controller;
+    private Background bg;
     private Player player;
     private PlayerBase playerBase;
 
@@ -39,6 +41,7 @@ public class GameScreen extends AbstractScreen {
         super.show();
         System.out.println("GAME");
         stageW.clear();
+        bg = new Background();
         dialogManager = new DialogManager(stageW);
         controller = new Controller();
         controller.initialization(stageW);
@@ -67,6 +70,7 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
         app.batch.begin();
+        bg.render(app.batch);
         dialogManager.render(app.batch);
         gameStateRender(delta, app.batch);
         fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 10);
@@ -77,18 +81,32 @@ public class GameScreen extends AbstractScreen {
     private void gameStateRender(float delta, SpriteBatch batch) {
         switch (gameState) {
             case MENU:
+                bg.update(delta);
                 gameState = GameState.SCREENSAVER;
                 break;
             case SCREENSAVER:
-//                playerBase.update(delta);
-//                playerBase.render(app.batch, delta);
-                dialogManager.messageBase1.show();
-                dialogManager.messageBase2.show();
-                dialogManager.messagePlayer1.show();
-                dialogManager.messagePlayer2.show();
-                if (dialogManager.getCurrentDialog() == 4) gameState = GameState.PLAY;
+                bg.update(delta);
+                playerBase.update(delta);
+                playerBase.render(app.batch, delta);
+                player.update(delta);
+                player.render(batch, delta);
+                if (playerBase.getBounds().getY() >= APP_HEIGHT - 320) {
+                    dialogManager.messageBase1.show();
+                    dialogManager.messageBase2.show();
+                    dialogManager.messagePlayer1.show();
+                    dialogManager.messagePlayer2.show();
+                }
+                if (dialogManager.getCurrentDialog() == 4) {
+                    playerBase.setCommand(1);
+                    if (playerBase.getBounds().getY() + playerBase.getBounds().getHeight() < -10) {
+                        player.establishPosition(110);
+                        gameState = GameState.PLAY;
+                    }
+                }
                 break;
             case PLAY:
+                bg.update(delta);
+                player.setCommand(1);
                 controller.group.addAction(Actions.moveTo(0, 0, 0.7f));
                 player.update(delta);
                 player.render(batch, delta);
@@ -98,12 +116,15 @@ public class GameScreen extends AbstractScreen {
                 player.render(batch, delta);
                 break;
             case BOSS_SCREENSAVER:
+                bg.update(delta);
                 controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
                 break;
             case WIN:
+                bg.update(delta);
                 controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
                 break;
             case GAME_OVER:
+                bg.update(delta);
                 controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
                 break;
             default:
@@ -136,6 +157,7 @@ public class GameScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         stageW.dispose();
+        bg.dispose();
         if (player != null) player.dispose();
         if (playerBase != null) playerBase.dispose();
     }

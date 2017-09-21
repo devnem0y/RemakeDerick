@@ -95,7 +95,7 @@ public class Dialog {
     public void draw(SpriteBatch batch) {
         batch.draw(texture, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
         fontText.draw(batch, partText, frame.getX() + 180, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 360, align, true);
-        fontText.draw(batch, "ДАЛЕЕ >>", APP_WIDTH - 200, 20);
+        fontText.draw(batch, "ДАЛЕЕ >>", frame.getX() + frame.getWidth() - 200, 20);
     }
 
     private void initButtonExit(Stage stage) {

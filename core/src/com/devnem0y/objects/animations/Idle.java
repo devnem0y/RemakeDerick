@@ -9,6 +9,5 @@ public class Idle implements AnimStateMachine {
     @Override
     public void running(GameObject context, SpriteBatch batch, float delta) {
         batch.draw((TextureRegion) context.getAnimPIdle().getKeyFrame(delta), context.getBounds().getX(), context.getBounds().getY());
-        System.out.println("IDLE");
     }
 }

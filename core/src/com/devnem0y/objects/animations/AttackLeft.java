@@ -9,6 +9,5 @@ public class AttackLeft implements AnimStateMachine {
     @Override
     public void running(GameObject context, SpriteBatch batch, float delta) {
         batch.draw((TextureRegion) context.getAnimPAttackLeft().getKeyFrame(delta), context.getBounds().getX(), context.getBounds().getY());
-        System.out.println("ATTACK_LEFT");
     }
 }

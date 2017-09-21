@@ -18,7 +18,7 @@ public class MessageBase extends Dialog {
     @Override
     public void draw(SpriteBatch batch) {
         super.draw(batch);
-        batch.draw(avatar, getFrame().getX() + 620, getFrame().getY() - 60);
+        batch.draw(avatar, getFrame().getX() + 635, getFrame().getY() - 60);
     }
 
     @Override

@@ -9,6 +9,5 @@ public class Right implements AnimStateMachine {
     @Override
     public void running(GameObject context, SpriteBatch batch, float delta) {
         batch.draw((TextureRegion) context.getAnimPRight().getKeyFrame(delta), context.getBounds().getX(), context.getBounds().getY());
-        System.out.println("RIGHT");
     }
 }

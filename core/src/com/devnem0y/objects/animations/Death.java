@@ -9,6 +9,5 @@ public class Death implements AnimStateMachine {
     @Override
     public void running(GameObject context, SpriteBatch batch, float delta) {
         batch.draw((TextureRegion) context.getAnimPDeath().getKeyFrame(delta), context.getBounds().getX(), context.getBounds().getY());
-        System.out.println("DEATH");
     }
 }
