@@ -60,10 +60,6 @@ public class GameScreen extends AbstractScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            if (gameState != GameState.PAUSE) gameState = GameState.PAUSE;
-            else gameState = GameState.PLAY;
-        }
     }
 
     @Override
@@ -99,7 +95,7 @@ public class GameScreen extends AbstractScreen {
                 if (dialogManager.getCurrentDialog() == 4) {
                     playerBase.setCommand(1);
                     if (playerBase.getBounds().getY() + playerBase.getBounds().getHeight() < -10) {
-                        player.establishPosition(110);
+                        player.establishPosition(111);
                         gameState = GameState.PLAY;
                     }
                 }
@@ -110,10 +106,12 @@ public class GameScreen extends AbstractScreen {
                 controller.group.addAction(Actions.moveTo(0, 0, 0.7f));
                 player.update(delta);
                 player.render(batch, delta);
+                pauseGame();
                 break;
             case PAUSE:
                 controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
                 player.render(batch, delta);
+                pauseGame();
                 break;
             case BOSS_SCREENSAVER:
                 bg.update(delta);
@@ -129,6 +127,13 @@ public class GameScreen extends AbstractScreen {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void pauseGame() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            if (gameState != GameState.PAUSE) gameState = GameState.PAUSE;
+            else gameState = GameState.PLAY;
         }
     }
 

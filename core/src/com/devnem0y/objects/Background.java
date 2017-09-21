@@ -9,7 +9,7 @@ public class Background {
 
     private Texture texBg, texStar;
     private Star[] stars;
-    private int starsCount = 200;
+    private int starsCount = 70;
 
     public Background() {
         texBg = new Texture("image/background.png");

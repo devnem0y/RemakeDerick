@@ -141,5 +141,7 @@ public class Dialog {
 
     public void dispose() {
         if (texture != null) texture.dispose();
+        fontLeader.dispose();
+        fontText.dispose();
     }
 }
