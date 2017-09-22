@@ -57,7 +57,6 @@ public class Controller {
         btnAStyle.up = skin.getDrawable("btnA_up");
 
         btnA = new Button(btnAStyle);
-        //btnA.setSize(160, 160);
         btnA.setPosition(Constants.APP_SCREEN_WIDTH - 255, 40);
         btnA.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -76,7 +75,6 @@ public class Controller {
         btnBStyle.up = skin.getDrawable("btnB_up");
 
         btnB = new Button(btnBStyle);
-        //btnA.setSize(160, 160);
         btnB.setPosition(Constants.APP_SCREEN_WIDTH - 135, 150);
         btnB.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

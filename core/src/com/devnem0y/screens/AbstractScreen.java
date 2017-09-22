@@ -52,7 +52,7 @@ public abstract class AbstractScreen implements Screen{
         FreeTypeFontGenerator.FreeTypeFontParameter paramsLeader = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         paramsLeader.characters = FONT_CHARS;
-        paramsLeader.size = 26;
+        paramsLeader.size = 150;
         paramsLeader.color = Color.WHITE;
         fontLeader = generatorLeader.generateFont(paramsLeader);
     }

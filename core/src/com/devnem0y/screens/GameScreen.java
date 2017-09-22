@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
+import com.devnem0y.handlers.input.MenuGUI;
 import com.devnem0y.managers.DialogManager;
 import com.devnem0y.objects.Background;
 import com.devnem0y.objects.Player;
@@ -22,6 +23,7 @@ public class GameScreen extends AbstractScreen {
     private Stage stageW;
     private GameState gameState;
 
+    private MenuGUI menuGUI;
     public static DialogManager dialogManager;
     private Controller controller;
     private Background bg;
@@ -43,6 +45,8 @@ public class GameScreen extends AbstractScreen {
         stageW.clear();
         bg = new Background();
         dialogManager = new DialogManager(stage);
+        menuGUI = new MenuGUI(fontLeader);
+        menuGUI.initialization(stage);
         controller = new Controller();
         controller.initialization(stageW);
         player = new Player(controller);
@@ -57,9 +61,6 @@ public class GameScreen extends AbstractScreen {
     public void update(float delta) {
         super.update(delta);
         stageW.act(delta);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
     }
 
     @Override
@@ -69,18 +70,23 @@ public class GameScreen extends AbstractScreen {
         bg.render(app.batch);
         dialogManager.render(app.batch);
         gameStateRender(delta, app.batch);
-        fontLog.draw(app.batch, "press ESC to the exit", 10, APP_HEIGHT - 10);
         app.batch.end();
+        stage.draw();
         stageW.draw();
     }
 
     private void gameStateRender(float delta, SpriteBatch batch) {
         switch (gameState) {
             case MENU:
+                menuGUI.group.addAction(Actions.moveTo(0, 0, 0.7f));
+                menuGUI.btnExit.setPosition(APP_WIDTH - 100, 25);
                 bg.update(delta);
-                gameState = GameState.SCREENSAVER;
+                if (menuGUI.isBtnPlayInput()) gameState = GameState.SCREENSAVER;
+                else if (menuGUI.isBtnExitInput()) Gdx.app.exit();
                 break;
             case SCREENSAVER:
+                menuGUI.group.addAction(Actions.moveTo(0, 480, 4f));
+                menuGUI.btnExit.setPosition(APP_WIDTH + 100, 25);
                 bg.update(delta);
                 playerBase.update(delta);
                 playerBase.render(app.batch, delta);
