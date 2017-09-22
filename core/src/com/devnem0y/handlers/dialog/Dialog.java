@@ -50,7 +50,7 @@ public class Dialog {
         for (int i = 32; i < 127; i++) FONT_CHARS += (char)i;
         for (int i = 1024; i < 1104; i++) FONT_CHARS += (char)i;
 
-        FreeTypeFontGenerator generatorText = new FreeTypeFontGenerator(Gdx.files.internal("fonts/9303.ttf"));
+        FreeTypeFontGenerator generatorText = new FreeTypeFontGenerator(Gdx.files.internal("fonts/10468.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter paramsText = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         paramsText.characters = FONT_CHARS;

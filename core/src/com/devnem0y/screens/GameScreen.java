@@ -42,13 +42,13 @@ public class GameScreen extends AbstractScreen {
         System.out.println("GAME");
         stageW.clear();
         bg = new Background();
-        dialogManager = new DialogManager(stageW);
+        dialogManager = new DialogManager(stage);
         controller = new Controller();
         controller.initialization(stageW);
         player = new Player(controller);
         player.spawn(null, null, null, null, null);
         playerBase = new PlayerBase();
-        Gdx.input.setInputProcessor(stageW);
+        Gdx.input.setInputProcessor(stage);
 
         gameState = GameState.MENU;
     }
@@ -97,6 +97,7 @@ public class GameScreen extends AbstractScreen {
                     if (playerBase.getBounds().getY() + playerBase.getBounds().getHeight() < -10) {
                         player.establishPosition(111);
                         gameState = GameState.PLAY;
+                        Gdx.input.setInputProcessor(stageW);
                     }
                 }
                 break;
@@ -109,21 +110,21 @@ public class GameScreen extends AbstractScreen {
                 pauseGame();
                 break;
             case PAUSE:
-                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                controller.group.addAction(Actions.moveTo(0, -290, 0.7f));
                 player.render(batch, delta);
                 pauseGame();
                 break;
             case BOSS_SCREENSAVER:
                 bg.update(delta);
-                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                controller.group.addAction(Actions.moveTo(0, -290, 0.7f));
                 break;
             case WIN:
                 bg.update(delta);
-                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                controller.group.addAction(Actions.moveTo(0, -290, 0.7f));
                 break;
             case GAME_OVER:
                 bg.update(delta);
-                controller.group.addAction(Actions.moveTo(0, -270, 0.7f));
+                controller.group.addAction(Actions.moveTo(0, -290, 0.7f));
                 break;
             default:
                 break;

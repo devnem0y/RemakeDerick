@@ -1,0 +1,33 @@
+
+buttons.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+play_down
+  rotate: false
+  xy: 2, 2
+  size: 109, 133
+  orig: 109, 133
+  offset: 0, 0
+  index: -1
+play_up
+  rotate: false
+  xy: 113, 2
+  size: 109, 133
+  orig: 109, 133
+  offset: 0, 0
+  index: -1
+exit_down
+  rotate: false
+  xy: 224, 45
+  size: 75, 90
+  orig: 75, 90
+  offset: 0, 0
+  index: -1
+exit_up
+  rotate: false
+  xy: 301, 45
+  size: 75, 90
+  orig: 75, 90
+  offset: 0, 0
+  index: -1

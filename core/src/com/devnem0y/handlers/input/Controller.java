@@ -17,7 +17,7 @@ public class Controller {
     public Group group;
     private Skin skin;
     private Touchpad touchpad;
-    private Button btnBit;
+    private Button btnA, btnB;
     private boolean btnAttackInput;
 
     public Controller() {
@@ -27,13 +27,14 @@ public class Controller {
 
     public void initialization(Stage stage) {
         group = new Group();
-        group.setPosition(0, -270);
+        group.setPosition(0, -290);
 
         createStick(stage);
         createBtn(stage);
 
         group.addActor(touchpad);
-        group.addActor(btnBit);
+        group.addActor(btnA);
+        group.addActor(btnB);
         stage.addActor(group);
     }
 
@@ -45,20 +46,20 @@ public class Controller {
         touchpadStyle.knob = touchKnob;
 
         touchpad = new Touchpad(10, touchpadStyle);
-        touchpad.setBounds(15, 15, 200, 200);
+        touchpad.setBounds(35, 35, 250, 250);
 
         stage.addActor(touchpad);
     }
 
     private void createBtn(Stage stage) {
-        Button.ButtonStyle btnBitStyle = new Button.ButtonStyle();
-        btnBitStyle.down = skin.getDrawable("btnDown");
-        btnBitStyle.up = skin.getDrawable("btnUp");
+        Button.ButtonStyle btnAStyle = new Button.ButtonStyle();
+        btnAStyle.down = skin.getDrawable("btnA_down");
+        btnAStyle.up = skin.getDrawable("btnA_up");
 
-        btnBit = new Button(btnBitStyle);
-        btnBit.setSize(160, 160);
-        btnBit.setPosition(Constants.APP_SCREEN_WIDTH - 175, 25);
-        btnBit.addListener(new InputListener() {
+        btnA = new Button(btnAStyle);
+        //btnA.setSize(160, 160);
+        btnA.setPosition(Constants.APP_SCREEN_WIDTH - 255, 40);
+        btnA.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
                 btnAttackInput = true;
@@ -70,7 +71,27 @@ public class Controller {
             }
         });
 
-        stage.addActor(btnBit);
+        Button.ButtonStyle btnBStyle = new Button.ButtonStyle();
+        btnBStyle.down = skin.getDrawable("btnB_down");
+        btnBStyle.up = skin.getDrawable("btnB_up");
+
+        btnB = new Button(btnBStyle);
+        //btnA.setSize(160, 160);
+        btnB.setPosition(Constants.APP_SCREEN_WIDTH - 135, 150);
+        btnB.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
+
+                return true;
+            }
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+
+                Gdx.app.log("my app", "Released");
+            }
+        });
+
+        stage.addActor(btnA);
+        stage.addActor(btnB);
     }
 
     public Touchpad getTouchpad() {
