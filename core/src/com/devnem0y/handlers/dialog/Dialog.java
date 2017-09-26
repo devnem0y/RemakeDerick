@@ -105,8 +105,6 @@ public class Dialog {
     public void draw(SpriteBatch batch) {
         batch.draw(texture, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
         label.setText(partText);
-        //fontText.draw(batch, partText, frame.getX() + 180, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 360, align, true);
-        //fontText.draw(batch, "ДАЛЕЕ >>", frame.getX() + frame.getWidth() - 200, 20);
     }
 
     private void initButtonExit(Stage stage) {
@@ -137,19 +135,7 @@ public class Dialog {
         return frame;
     }
 
-    public BitmapFont getFontLeader() {
-        return fontLeader;
-    }
-
-    public BitmapFont getFontText() {
-        return fontText;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
+    void setVisible(boolean visible) {
         this.visible = visible;
     }
 

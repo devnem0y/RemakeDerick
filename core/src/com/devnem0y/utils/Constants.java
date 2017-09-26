@@ -10,8 +10,8 @@ public class Constants {
     public static final int APP_FPS = 60;
 
     // Размер экрана для запуска DESKTOP
-    public static final int DESKTOP_WIDTH = 800;
-    public static final int DESKTOP_HEIGHT = 480;
+    public static final int DESKTOP_WIDTH = 1280;
+    public static final int DESKTOP_HEIGHT = 720;
 
     // Заданный размер экрана для всех устройств
     public static final int APP_WIDTH = 800;
