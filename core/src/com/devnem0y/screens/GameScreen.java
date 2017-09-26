@@ -44,7 +44,7 @@ public class GameScreen extends AbstractScreen {
         System.out.println("GAME");
         stageW.clear();
         bg = new Background();
-        dialogManager = new DialogManager(stage);
+        dialogManager = new DialogManager(stageW);
         menuGUI = new MenuGUI(fontLeader);
         menuGUI.initialization(stage);
         controller = new Controller();
@@ -81,8 +81,10 @@ public class GameScreen extends AbstractScreen {
                 menuGUI.group.addAction(Actions.moveTo(0, 0, 0.7f));
                 menuGUI.btnExit.setPosition(APP_WIDTH - 100, 25);
                 bg.update(delta);
-                if (menuGUI.isBtnPlayInput()) gameState = GameState.SCREENSAVER;
-                else if (menuGUI.isBtnExitInput()) Gdx.app.exit();
+                if (menuGUI.isBtnPlayInput()) {
+                    Gdx.input.setInputProcessor(stageW);
+                    gameState = GameState.SCREENSAVER;
+                } else if (menuGUI.isBtnExitInput()) Gdx.app.exit();
                 break;
             case SCREENSAVER:
                 menuGUI.group.addAction(Actions.moveTo(0, 480, 4f));
@@ -103,7 +105,6 @@ public class GameScreen extends AbstractScreen {
                     if (playerBase.getBounds().getY() + playerBase.getBounds().getHeight() < -10) {
                         player.establishPosition(111);
                         gameState = GameState.PLAY;
-                        Gdx.input.setInputProcessor(stageW);
                     }
                 }
                 break;

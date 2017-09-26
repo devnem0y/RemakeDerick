@@ -11,8 +11,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 
 import static com.devnem0y.utils.Constants.*;
 
@@ -22,7 +24,8 @@ public class Dialog {
     private Texture texture;
     private Button next;
     private BitmapFont fontLeader, fontText;
-    private int align;
+    private Label.LabelStyle labelStyle;
+    private Label label, labelBtn;
 
     private float timer;
     private int letterNumber;
@@ -39,9 +42,12 @@ public class Dialog {
         fontLeader = new BitmapFont();
         fontText = new BitmapFont();
         initFont();
-        initButtonExit(stage);
         fullText = new StringBuilder(text);
-        this.align = align;
+        labelStyle = new Label.LabelStyle(fontText, Color.WHITE);
+        label = new Label(partText,labelStyle);
+        label.setPosition(frame.getX() + 200, frame.getY() + 40, align);
+        stage.addActor(label);
+        initButtonExit(stage);
         this.visible = visible;
     }
 
@@ -71,8 +77,10 @@ public class Dialog {
         if (visible) {
             frame.setPosition(0, 0);
             if (next != null) {
-                next.setPosition((frame.getX() + frame.getWidth()) - 210, frame.getY() + 2);
+                next.setPosition(APP_SCREEN_WIDTH / 2 + 225, frame.getY() + 5);
             }
+            label.setPosition(APP_SCREEN_WIDTH / 2 - 220, frame.getHeight() - 30);
+            labelBtn.setPosition(APP_SCREEN_WIDTH / 2 + 225, frame.getY() + 5);
 
             timer += Gdx.graphics.getDeltaTime();
             if (letterNumber != fullText.length()) {
@@ -87,25 +95,30 @@ public class Dialog {
     public void hide() {
         frame.setPosition(-1000, 0);
         if (next != null) {
-            next.setPosition((frame.getX() + frame.getWidth()) - 210, frame.getY() + 2);
+            next.setPosition(frame.getX(), frame.getY());
         }
+        label.setPosition(frame.getX(), frame.getY());
+        labelBtn.setPosition(frame.getX(), frame.getY());
         visible = false;
     }
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture, frame.getX(), frame.getY(), frame.getWidth(), frame.getHeight());
-        fontText.draw(batch, partText, frame.getX() + 180, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 360, align, true);
-        fontText.draw(batch, "ДАЛЕЕ >>", frame.getX() + frame.getWidth() - 200, 20);
+        label.setText(partText);
+        //fontText.draw(batch, partText, frame.getX() + 180, (frame.getY() + frame.getHeight() - 20), frame.getWidth() - 360, align, true);
+        //fontText.draw(batch, "ДАЛЕЕ >>", frame.getX() + frame.getWidth() - 200, 20);
     }
 
     private void initButtonExit(Stage stage) {
+        labelBtn = new Label("ДАЛЕЕ >>", labelStyle);
+        labelBtn.setPosition(frame.getX(), frame.getY());
         Skin skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("image/atlas/btnNext.atlas")));
         Button.ButtonStyle exitStyle = new Button.ButtonStyle();
         exitStyle.down = skin.getDrawable("btn_next");
         exitStyle.up = skin.getDrawable("btn_next");
         next = new Button(exitStyle);
-        next.setPosition((frame.getX() + frame.getWidth()) - 210, frame.getY() + 2);
+        next.setPosition(frame.getX(), frame.getY());
         next.addListener(new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -116,6 +129,7 @@ public class Dialog {
             }
         });
 
+        stage.addActor(labelBtn);
         stage.addActor(next);
     }
 

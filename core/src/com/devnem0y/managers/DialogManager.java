@@ -14,10 +14,10 @@ public class DialogManager {
     public MessagePlayer messagePlayer1, messagePlayer2;
 
     public DialogManager(Stage stage) {
-        messageBase1 = new MessageBase(800, 105, "Диалог 1", true, Align.center, stage);
-        messagePlayer1 = new MessagePlayer(800, 105, "Диалог 2", false, Align.center, stage);
-        messageBase2 = new MessageBase(800, 105, "Диалог 3", false, Align.center, stage);
-        messagePlayer2 = new MessagePlayer(800, 105, "Диалог 4", false, Align.center, stage);
+        messageBase1 = new MessageBase(800, 105, "Диалог 1 Диалог 1 Диалог 1 Диалог 1 Диалог 1 Диалог 1\nДиалог 1 Диалог 1 Диалог 1 Диалог 1", true, Align.left, stage);
+        messagePlayer1 = new MessagePlayer(800, 105, "Диалог 2", false, Align.left, stage);
+        messageBase2 = new MessageBase(800, 105, "Диалог 3", false, Align.left, stage);
+        messagePlayer2 = new MessagePlayer(800, 105, "Диалог 4", false, Align.left, stage);
     }
 
     public void render(SpriteBatch batch) {
