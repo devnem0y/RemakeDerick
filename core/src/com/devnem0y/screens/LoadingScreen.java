@@ -12,6 +12,7 @@ import com.devnem0y.Application;
 import com.devnem0y.managers.GameScreenManager;
 
 import static com.devnem0y.utils.Constants.*;
+import static com.devnem0y.utils.PathRes.*;
 
 public class LoadingScreen extends AbstractScreen{
 
@@ -45,7 +46,7 @@ public class LoadingScreen extends AbstractScreen{
         stageW.act(delta);
         progress = MathUtils.lerp(progress, app.assetManager.getProgress(), 0.1f);
         if (app.assetManager.update() && progress >= app.assetManager.getProgress() - 0.001f) {
-            app.gsm.setScreen(GameScreenManager.STATE.GAME);
+            app.gsm.setScreen(GameScreenManager.STATE.SPLASH);
         }
     }
 
@@ -56,7 +57,7 @@ public class LoadingScreen extends AbstractScreen{
     }
 
     private void queueAssets() {
-		app.assetManager.load("image/logo.png", Texture.class);
+		app.assetManager.load(LOGO, Texture.class);
         app.assetManager.finishLoading();
     }
 

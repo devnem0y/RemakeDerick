@@ -11,7 +11,9 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import static com.devnem0y.utils.Constants.*;
+import static com.devnem0y.utils.PathRes.*;
 
 public class SplashScreen extends AbstractScreen{
 
@@ -33,7 +35,7 @@ public class SplashScreen extends AbstractScreen{
             }
         };
 
-        Texture logo = app.assetManager.get("image/logo.png", Texture.class);
+        Texture logo = app.assetManager.get(LOGO, Texture.class);
         splashImg = new Image(logo);
         splashImg.setPosition(APP_WIDTH / 2 - logo.getWidth() / 2, APP_HEIGHT / 2 - logo.getHeight() / 2);
         splashImg.addAction(sequence(alpha(0), fadeIn(3f), delay(0.7f), fadeOut(2f), run(transitionRunnable)));
@@ -72,4 +74,8 @@ public class SplashScreen extends AbstractScreen{
 
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
 }
