@@ -17,12 +17,16 @@ import static com.devnem0y.utils.Constants.*;
 
 public class Player extends GameObject {
 
-    private GameObject asteroid, enemy, bonus, bulletOne;
+    private GameObject asteroid, enemy, bonus, rocket;
+    private GameObject[] bulletsOne, bulletsTow;
     private Controller controller;
     private float posX, posY;
     private AnimStateMachine animStateMachine;
     private float animDt = 0f;
     private int command;
+    private int fireCount = 0;
+    private boolean superFire;
+    private int rockets;
 
     public Player(Controller controller) {
         super();
@@ -40,13 +44,16 @@ public class Player extends GameObject {
     private void running(SpriteBatch batch, float dt) {animStateMachine.running(this, batch, dt);}
 
     @Override
-    public void spawn(GameObject object_0, GameObject object_1, GameObject object_2, GameObject object_3, GameObject object_4) {
+    public void spawn(GameObject object_0, GameObject object_1, GameObject[] bulletsOne, GameObject[] bulletsTow, GameObject rocket) {
         this.asteroid = object_0;
         this.enemy = object_1;
-        this.bonus = object_2;
-        this.bulletOne = object_3;
+        this.bulletsOne = bulletsOne;
+        this.bulletsTow = bulletsTow;
+        this.rocket = rocket;
         bounds.setPosition(APP_WIDTH / 2 - bounds.getWidth() / 2, -480);
         alive = true;
+        rockets = 25;
+        superFire = false;
         setState(new Idle());
     }
 
@@ -65,7 +72,7 @@ public class Player extends GameObject {
                 bounds.setX(bounds.getX() + controller.getTouchpad().getKnobPercentX() * (velocity * delta));
                 bounds.setY(bounds.getY() + controller.getTouchpad().getKnobPercentY() * (velocity * delta));
                 if (controller.getTouchpad().getKnobX() == controller.getTouchpad().getWidth() / 2) {
-                    if (controller.isBtnAttackInput()) {
+                    if (controller.isBtnAInput()) {
                         if (controller.getTouchpad().getKnobY() > posY) setState(new Attack());
                         else if (controller.getTouchpad().getKnobY() < posY) setState(new Attack());
                     } else {
@@ -73,16 +80,19 @@ public class Player extends GameObject {
                         else if (controller.getTouchpad().getKnobY() < posY) setState(new Down());
                     }
                 } else if (controller.getTouchpad().getKnobX() > posX + 35) {
-                    if (controller.isBtnAttackInput()) setState(new AttackRight());
+                    if (controller.isBtnAInput()) setState(new AttackRight());
                     else setState(new Right());
                 } else if (controller.getTouchpad().getKnobX() < posX - 35) {
-                    if (controller.isBtnAttackInput()) setState(new AttackLeft());
+                    if (controller.isBtnAInput()) setState(new AttackLeft());
                     else setState(new Left());
                 }
             } else {
-                if (controller.isBtnAttackInput()) setState(new Attack());
+                if (controller.isBtnAInput()) setState(new Attack());
                 else setState(new Idle());
             }
+            if (controller.isBtnAInput()) fire();
+            if (controller.isBtnBInput()) fRocket();
+
             if (bounds.y + bounds.getHeight() >= APP_HEIGHT) bounds.y = APP_HEIGHT - bounds.getHeight();
             else if (bounds.y <= 0) bounds.y = 0;
             if (bounds.x + bounds.getWidth() >= APP_WIDTH) bounds.x = APP_WIDTH - bounds.getWidth();
@@ -97,9 +107,38 @@ public class Player extends GameObject {
     }
 
     private void fire() {
-        if (!bulletOne.isAlive()) {
-            bulletOne.setup(bounds.getX() + 5, (bounds.getY() + bounds.getHeight()) + 5);
+        fireCount++;
+        if (fireCount > 10) {
+            fireCount = 0;
+            if (superFire) {
+                for (GameObject bt : bulletsTow) {
+                    if (!bt.isAlive()) {
+                        bt.setup((bounds.getX() + bounds.getWidth() / 2) - 8, (bounds.getY() + bounds.getHeight()) + 5);
+                        break;
+                    }
+                }
+            } else {
+                for (GameObject b : bulletsOne) {
+                    if (!b.isAlive()) {
+                        b.setup((bounds.getX() + bounds.getWidth() / 2) - 3, (bounds.getY() + bounds.getHeight()) + 5);
+                        break;
+                    }
+                }
+            }
         }
+    }
+
+    private void fRocket() {
+        if (rockets > 0) {
+            if (!rocket.isAlive()) {
+                rocket.setup((bounds.getX() + bounds.getWidth() / 2) - 8, (bounds.getY() + bounds.getHeight()) + 5);
+                rockets--;
+            }
+        }
+    }
+
+    public int getRockets() {
+        return rockets;
     }
 
     public int getCommand() {

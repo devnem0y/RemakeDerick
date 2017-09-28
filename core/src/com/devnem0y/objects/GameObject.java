@@ -12,11 +12,16 @@ public abstract class GameObject {
     protected Rectangle bounds;
     TextureAtlas atlasPDeath, atlasPIdle, atlasPUp, atlasPDown, atlasPRight, atlasPLeft, atlasPAttack, atlasPAttackRight, atlasPAttackLeft;
     Animation animPDeath, animPIdle, animPUp, animPDown, animPRight, animPLeft, animPAttack, animPAttackRight, animPAttackLeft;
-    protected Texture texBulletOne;
+    protected Texture texBulletOne, texBulletTow, texRocket;
     protected float velocity;
     protected boolean alive;
 
-    public GameObject() {animInit();}
+    public GameObject() {
+        animInit();
+        texBulletOne = new Texture("image/bullet_1.png");
+        texBulletTow = new Texture("image/bullet_2.png");
+        texRocket = new Texture("image/rocket.png");
+    }
 
     private void animInit() {
         if (atlasPDeath == null) {
@@ -61,7 +66,7 @@ public abstract class GameObject {
     public void spawn(GameObject object_0, GameObject object_1) {}
     public void spawn(GameObject object_0, GameObject object_1, GameObject object_2) {}
     public void spawn(GameObject object_0, GameObject object_1, GameObject object_2, GameObject object_3) {}
-    public void spawn(GameObject object_0, GameObject object_1, GameObject object_2, GameObject object_3, GameObject object_4) {}
+    public void spawn(GameObject object_0, GameObject object_1, GameObject[] object_2, GameObject[] object_3, GameObject object_4) {}
 
     public void setup(float x, float y) {
         this.bounds.setPosition(x, y);

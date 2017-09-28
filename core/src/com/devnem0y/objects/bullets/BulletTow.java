@@ -6,18 +6,18 @@ import com.devnem0y.objects.GameObject;
 
 import static com.devnem0y.utils.Constants.*;
 
-public class BulletOne extends GameObject {
+public class BulletTow extends GameObject {
 
     private GameObject asteroid, enemy, bonus, boss;
     private int damage;
 
-    public BulletOne() {
+    public BulletTow() {
         super();
         bounds = new Rectangle();
-        bounds.setWidth(6);
-        bounds.setHeight(17);
+        bounds.setWidth(16);
+        bounds.setHeight(24);
         velocity = 900f;
-        damage = 1;
+        damage = 2;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BulletOne extends GameObject {
 
     @Override
     public void render(SpriteBatch batch, float animDelta) {
-        if (alive) batch.draw(texBulletOne, bounds.getX(), bounds.getY());
+        if (alive) batch.draw(texBulletTow, bounds.getX(), bounds.getY());
     }
 
     @Override

@@ -18,7 +18,7 @@ public class Controller {
     private Skin skin;
     private Touchpad touchpad;
     private Button btnA, btnB;
-    private boolean btnAttackInput;
+    private boolean btnAInput, btnBInput;
 
     public Controller() {
         skin = new Skin();
@@ -60,13 +60,11 @@ public class Controller {
         btnA.setPosition(Constants.APP_SCREEN_WIDTH - 255, 40);
         btnA.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
-                btnAttackInput = true;
+                btnAInput = true;
                 return true;
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                btnAttackInput = false;
-                Gdx.app.log("my app", "Released");
+                btnAInput = false;
             }
         });
 
@@ -78,13 +76,11 @@ public class Controller {
         btnB.setPosition(Constants.APP_SCREEN_WIDTH - 135, 150);
         btnB.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
-
+                btnBInput = true;
                 return true;
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-
-                Gdx.app.log("my app", "Released");
+                btnBInput = false;
             }
         });
 
@@ -96,7 +92,11 @@ public class Controller {
         return touchpad;
     }
 
-    public boolean isBtnAttackInput() {
-        return btnAttackInput;
+    public boolean isBtnAInput() {
+        return btnAInput;
+    }
+
+    public boolean isBtnBInput() {
+        return btnBInput;
     }
 }
