@@ -6,7 +6,7 @@ repeat: none
 btn_next
   rotate: false
   xy: 2, 2
-  size: 80, 25
-  orig: 80, 25
+  size: 192, 96
+  orig: 192, 96
   offset: 0, 0
   index: -1

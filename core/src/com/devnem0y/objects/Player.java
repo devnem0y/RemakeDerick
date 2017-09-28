@@ -17,7 +17,7 @@ import static com.devnem0y.utils.Constants.*;
 
 public class Player extends GameObject {
 
-    private GameObject asteroid, enemy, bonus;
+    private GameObject asteroid, enemy, bonus, bulletOne;
     private Controller controller;
     private float posX, posY;
     private AnimStateMachine animStateMachine;
@@ -44,6 +44,7 @@ public class Player extends GameObject {
         this.asteroid = object_0;
         this.enemy = object_1;
         this.bonus = object_2;
+        this.bulletOne = object_3;
         bounds.setPosition(APP_WIDTH / 2 - bounds.getWidth() / 2, -480);
         alive = true;
         setState(new Idle());
@@ -93,6 +94,12 @@ public class Player extends GameObject {
     public void render(SpriteBatch batch, float delta) {
         running(batch, animDt);
         animDt += delta;
+    }
+
+    private void fire() {
+        if (!bulletOne.isAlive()) {
+            bulletOne.setup(bounds.getX() + 5, (bounds.getY() + bounds.getHeight()) + 5);
+        }
     }
 
     public int getCommand() {

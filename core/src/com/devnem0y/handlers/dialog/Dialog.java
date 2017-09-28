@@ -76,7 +76,7 @@ public class Dialog {
         if (visible) {
             frame.setPosition(0, 0);
             if (next != null) {
-                next.setPosition(APP_SCREEN_WIDTH / 2 + 225, frame.getY() + 5);
+                next.setPosition(APP_SCREEN_WIDTH / 2 + 185, frame.getY());
             }
             label.setPosition(APP_SCREEN_WIDTH / 2 - 220, frame.getHeight() - 30);
             labelBtn.setPosition(APP_SCREEN_WIDTH / 2 + 225, frame.getY() + 5);

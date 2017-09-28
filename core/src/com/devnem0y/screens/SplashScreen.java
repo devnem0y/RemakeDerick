@@ -37,10 +37,10 @@ public class SplashScreen extends AbstractScreen{
 
         Texture logo = app.assetManager.get(LOGO, Texture.class);
         splashImg = new Image(logo);
-        splashImg.setPosition(APP_WIDTH / 2 - logo.getWidth() / 2, APP_HEIGHT / 2 - logo.getHeight() / 2);
+        splashImg.setPosition(APP_SCREEN_WIDTH / 2 - logo.getWidth() / 2, APP_SCREEN_HEIGHT / 2 - logo.getHeight() / 2);
         splashImg.addAction(sequence(alpha(0), fadeIn(3f), delay(0.7f), fadeOut(2f), run(transitionRunnable)));
 
-        stage.addActor(splashImg);
+        globalStage.addActor(splashImg);
     }
 
     @Override
@@ -51,12 +51,12 @@ public class SplashScreen extends AbstractScreen{
     @Override
     public void render(float delta) {
         super.render(delta);
-        stage.draw();
+        globalStage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        globalStage.getViewport().update(width, height, true);
     }
 
     @Override

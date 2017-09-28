@@ -1,5 +1,6 @@
 package com.devnem0y.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,13 +9,14 @@ import com.badlogic.gdx.math.Rectangle;
 
 public abstract class GameObject {
 
-    Rectangle bounds;
+    protected Rectangle bounds;
     TextureAtlas atlasPDeath, atlasPIdle, atlasPUp, atlasPDown, atlasPRight, atlasPLeft, atlasPAttack, atlasPAttackRight, atlasPAttackLeft;
     Animation animPDeath, animPIdle, animPUp, animPDown, animPRight, animPLeft, animPAttack, animPAttackRight, animPAttackLeft;
-    float velocity;
-    boolean alive;
+    protected Texture texBulletOne;
+    protected float velocity;
+    protected boolean alive;
 
-    GameObject() {animInit();}
+    public GameObject() {animInit();}
 
     private void animInit() {
         if (atlasPDeath == null) {
@@ -61,6 +63,11 @@ public abstract class GameObject {
     public void spawn(GameObject object_0, GameObject object_1, GameObject object_2, GameObject object_3) {}
     public void spawn(GameObject object_0, GameObject object_1, GameObject object_2, GameObject object_3, GameObject object_4) {}
 
+    public void setup(float x, float y) {
+        this.bounds.setPosition(x, y);
+        alive = true;
+    }
+
     public abstract void update(float delta);
     public abstract void render(SpriteBatch batch, float animDelta);
     public void dispose() {
@@ -73,6 +80,7 @@ public abstract class GameObject {
         if (atlasPAttack != null) atlasPAttack.dispose();
         if (atlasPAttackRight != null) atlasPAttackRight.dispose();
         if (atlasPAttackLeft != null) atlasPAttackLeft.dispose();
+        if (texBulletOne != null) texBulletOne.dispose();
     }
 
     public Rectangle getBounds() {
@@ -134,4 +142,6 @@ public abstract class GameObject {
     public Animation getAnimPAttackLeft() {
         return animPAttackLeft;
     }
+
+
 }

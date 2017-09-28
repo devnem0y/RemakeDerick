@@ -17,7 +17,7 @@ public abstract class AbstractScreen implements Screen{
 
     protected final Application app;
     protected OrthographicCamera camera;
-    protected Stage stage;
+    protected Stage stage, globalStage;
 
     protected BitmapFont fontLog;
     BitmapFont fontLeader, fontText;
@@ -28,6 +28,10 @@ public abstract class AbstractScreen implements Screen{
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, APP_WIDTH, APP_HEIGHT);
         stage = new Stage(new FitViewport(APP_WIDTH, APP_HEIGHT, camera));
+        OrthographicCamera globalCamera = new OrthographicCamera();
+        globalCamera.setToOrtho(false, APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT);
+        globalStage = new Stage();
+        globalStage.setViewport(new FitViewport(APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT, globalCamera));
         fontLog = new BitmapFont();
         fontLog.setColor(Color.SKY);
         fontLeader = new BitmapFont();
@@ -59,11 +63,13 @@ public abstract class AbstractScreen implements Screen{
 
     public void update(float delta) {
         stage.act(delta);
+        globalStage.act(delta);
     }
 
     @Override
     public void show() {
         stage.clear();
+        globalStage.clear();
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -78,10 +84,12 @@ public abstract class AbstractScreen implements Screen{
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        globalStage.getViewport().update(width, height, true);
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        globalStage.dispose();
     }
 }
