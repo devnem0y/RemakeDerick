@@ -1,23 +1,24 @@
-package com.devnem0y.objects.bullets;
+package com.devnem0y.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.devnem0y.objects.GameObject;
 
 import static com.devnem0y.utils.Constants.*;
 
-public class Rockets extends GameObject {
+public class Bullet extends GameObject {
 
     private GameObject asteroid, enemy, bonus, boss;
+    private Texture texture;
     private int damage;
 
-    public Rockets() {
-        super();
+    public Bullet(String texturePath, float width, float height, float velocity, int damage) {
         bounds = new Rectangle();
-        bounds.setWidth(16);
-        bounds.setHeight(30);
-        velocity = 300f;
-        damage = 20;
+        bounds.setWidth(width);
+        bounds.setHeight(height);
+        texture = new Texture(texturePath);
+        this.velocity = velocity;
+        this.damage = damage;
     }
 
     @Override
@@ -39,18 +40,19 @@ public class Rockets extends GameObject {
             bounds.y += velocity * delta;
 //            if (bounds.overlaps(asteroid.getBounds()) || bounds.overlaps(bonus.getBounds()) ||
 //                    bounds.overlaps(enemy.getBounds()) || bounds.overlaps(boss.getBounds())) alive = false;
-            if (bounds.getY() > APP_SCREEN_WIDTH) alive = false;
+            if (bounds.getY() > APP_WIDTH) alive = false;
         }
     }
 
     @Override
     public void render(SpriteBatch batch, float animDelta) {
-        if (alive) batch.draw(texRocket, bounds.getX(), bounds.getY());
+        if (alive) batch.draw(texture, bounds.getX(), bounds.getY());
     }
 
     @Override
     public void dispose() {
         super.dispose();
+        texture.dispose();
     }
 
     public int getDamage() {

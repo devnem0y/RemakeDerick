@@ -5,27 +5,23 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
 import com.devnem0y.handlers.input.MenuGUI;
 import com.devnem0y.managers.DialogManager;
 import com.devnem0y.objects.Background;
+import com.devnem0y.objects.Bullet;
 import com.devnem0y.objects.Player;
 import com.devnem0y.objects.PlayerBase;
-import com.devnem0y.objects.bullets.BulletOne;
-import com.devnem0y.objects.bullets.BulletTow;
-import com.devnem0y.objects.bullets.Rockets;
 import com.devnem0y.utils.GameState;
 
 import static com.devnem0y.utils.Constants.*;
+import static com.devnem0y.utils.PathRes.*;
 
 public class GameScreen extends AbstractScreen {
 
-    private Stage stageW;
     private GameState gameState;
 
     private MenuGUI menuGUI;
@@ -36,58 +32,70 @@ public class GameScreen extends AbstractScreen {
     private Background bg;
     private Player player;
     private PlayerBase playerBase;
-    private BulletOne[] bulletsOne;
-    private BulletTow[] bulletsTow;
-    private Rockets rockets;
+    private Bullet[] bulletsOne;
+    private Bullet[] bulletsTow;
+    private Bullet rockets;
     private Label infoRocket;
 
     public GameScreen(final Application app) {
         super(app);
         OrthographicCamera widget = new OrthographicCamera();
         widget.setToOrtho(false, APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT);
-        stageW = new Stage();
-        stageW.setViewport(new FitViewport(APP_SCREEN_WIDTH, APP_SCREEN_HEIGHT, widget));
     }
 
     @Override
     public void show() {
         super.show();
         System.out.println("GAME");
-        stageW.clear();
+        globalStage.clear();
         bg = new Background();
-        dialogManager = new DialogManager(stageW);
+        dialogManager = new DialogManager(globalStage);
         menuGUI = new MenuGUI(fontLeader);
         menuGUI.initialization(stage);
+        controller = new Controller();
+        controller.initialization(globalStage);
+        createGameObjects();
+        spawnObjects();
+        createInterface();
+
+        Gdx.input.setInputProcessor(stage);
+        gameState = GameState.MENU;
+    }
+
+    private void createGameObjects() {
+        player = new Player(controller);
+        bulletsOne = new Bullet[5];
+        bulletsTow = new Bullet[5];
+        rockets = new Bullet(ROCKET, 16f, 30f, 350f, 20);
+        playerBase = new PlayerBase();
+    }
+
+    private void spawnObjects() {
+        for (int i = 0; i < bulletsOne.length; i++) {
+            bulletsOne[i] = new Bullet(BULLET_1, 6f, 17f, 900f, 1);
+            bulletsOne[i].spawn(null, null, null, null);
+        }
+        for (int i = 0; i < bulletsTow.length; i++) {
+            bulletsTow[i] = new Bullet(BULLET_2, 16f, 24f, 900f, 2);
+            bulletsTow[i].spawn(null, null, null, null);
+        }
+        rockets.spawn(null, null, null, null);
+        player.spawn(null, null, bulletsOne, bulletsTow, rockets);
+    }
+
+    private void createInterface() {
         Label.LabelStyle labelStyle = new Label.LabelStyle(fontText, Color.WHITE);
         infoRocket = new Label("",labelStyle);
         infoRocket.setPosition(APP_SCREEN_WIDTH - 145, APP_SCREEN_HEIGHT / 2 + 40);
-        stageW.addActor(infoRocket);
-        controller = new Controller();
-        controller.initialization(stageW);
-        player = new Player(controller);
-        bulletsOne = new BulletOne[5];
-        for (int i = 0; i < bulletsOne.length; i++) {
-            bulletsOne[i] = new BulletOne();
-            bulletsOne[i].spawn(null, null, null, null);
-        }
-        bulletsTow = new BulletTow[5];
-        for (int i = 0; i < bulletsTow.length; i++) {
-            bulletsTow[i] = new BulletTow();
-            bulletsTow[i].spawn(null, null, null, null);
-        }
-        rockets = new Rockets();
-        rockets.spawn(null, null, null, null);
-        player.spawn(null, null, bulletsOne, bulletsTow, rockets);
-        playerBase = new PlayerBase();
-        Gdx.input.setInputProcessor(stage);
-
-        gameState = GameState.MENU;
+        globalStage.addActor(infoRocket);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        stageW.act(delta);
+        globalStage.act(delta);
+        if (gameState != GameState.PLAY) infoRocket.setVisible(false);
+        else infoRocket.setVisible(true);
     }
 
     @Override
@@ -99,7 +107,7 @@ public class GameScreen extends AbstractScreen {
         gameStateRender(delta, app.batch);
         app.batch.end();
         stage.draw();
-        stageW.draw();
+        globalStage.draw();
     }
 
     private void gameStateRender(float delta, SpriteBatch batch) {
@@ -141,11 +149,11 @@ public class GameScreen extends AbstractScreen {
         controller.group.addAction(Actions.moveTo(0, 0, 0.7f));
         player.update(delta);
         player.render(batch, delta);
-        for (BulletOne b : bulletsOne) {
+        for (Bullet b : bulletsOne) {
             b.update(delta);
             b.render(batch, delta);
         }
-        for (BulletTow bt : bulletsTow) {
+        for (Bullet bt : bulletsTow) {
             bt.update(delta);
             bt.render(batch, delta);
         }
@@ -160,7 +168,7 @@ public class GameScreen extends AbstractScreen {
         menuGUI.btnExit.setPosition(APP_WIDTH - 100, 25);
         bg.update(delta);
         if (menuGUI.isBtnPlayInput()) {
-            Gdx.input.setInputProcessor(stageW);
+            Gdx.input.setInputProcessor(globalStage);
             gameState = GameState.SCREENSAVER;
         } else if (menuGUI.isBtnExitInput()) Gdx.app.exit();
     }
@@ -198,7 +206,6 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        stageW.getViewport().update(width, height, true);
     }
 
     @Override
@@ -219,14 +226,13 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
-        stageW.dispose();
         bg.dispose();
         if (player != null) player.dispose();
         if (playerBase != null) playerBase.dispose();
-        for (BulletOne b : bulletsOne) {
+        for (Bullet b : bulletsOne) {
             if (b != null) b.dispose();
         }
-        for (BulletTow bt : bulletsTow) {
+        for (Bullet bt : bulletsTow) {
             if (bt != null) bt.dispose();
         }
         if (rockets != null) rockets.dispose();

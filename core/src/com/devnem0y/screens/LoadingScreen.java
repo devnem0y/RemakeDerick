@@ -2,6 +2,7 @@ package com.devnem0y.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -47,7 +48,20 @@ public class LoadingScreen extends AbstractScreen{
     }
 
     private void queueAssets() {
+        // Texture
 		app.assetManager.load(LOGO, Texture.class);
+		app.assetManager.load(BACKGROUND, Texture.class);
+		app.assetManager.load(STAR, Texture.class);
+        // Atlas
+		app.assetManager.load(ATLAS_PLAYER_DEATH, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_IDLE, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_UP, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_DOWN, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_RIGHT, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_LEFT, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_ATTACK, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_ATTACK_R, TextureAtlas.class);
+		app.assetManager.load(ATLAS_PLAYER_ATTACK_L, TextureAtlas.class);
         app.assetManager.finishLoading();
     }
 

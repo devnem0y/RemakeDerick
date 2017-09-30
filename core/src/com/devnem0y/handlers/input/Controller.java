@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.devnem0y.utils.Constants;
 
+import static com.devnem0y.utils.PathRes.ATLAS_CONTROLLER;
+
 public class Controller {
 
     public Group group;
@@ -22,7 +24,7 @@ public class Controller {
 
     public Controller() {
         skin = new Skin();
-        skin.addRegions(new TextureAtlas(Gdx.files.internal("image/atlas/controller.atlas")));
+        skin.addRegions(new TextureAtlas(Gdx.files.internal(ATLAS_CONTROLLER)));
     }
 
     public void initialization(Stage stage) {

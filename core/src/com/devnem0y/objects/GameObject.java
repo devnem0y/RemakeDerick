@@ -1,63 +1,61 @@
 package com.devnem0y.objects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.devnem0y.Application;
+
+import static com.devnem0y.utils.PathRes.*;
 
 public abstract class GameObject {
 
     protected Rectangle bounds;
     TextureAtlas atlasPDeath, atlasPIdle, atlasPUp, atlasPDown, atlasPRight, atlasPLeft, atlasPAttack, atlasPAttackRight, atlasPAttackLeft;
     Animation animPDeath, animPIdle, animPUp, animPDown, animPRight, animPLeft, animPAttack, animPAttackRight, animPAttackLeft;
-    protected Texture texBulletOne, texBulletTow, texRocket;
     protected float velocity;
     protected boolean alive;
 
     public GameObject() {
         animInit();
-        texBulletOne = new Texture("image/bullet_1.png");
-        texBulletTow = new Texture("image/bullet_2.png");
-        texRocket = new Texture("image/rocket.png");
     }
 
     private void animInit() {
         if (atlasPDeath == null) {
-            atlasPDeath = new TextureAtlas("image/atlas/player/death.atlas");
+            atlasPDeath = Application.assetManager.get(ATLAS_PLAYER_DEATH, TextureAtlas.class);
             animPDeath = new Animation<TextureRegion>(1f/10f, atlasPDeath.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPIdle == null) {
-            atlasPIdle = new TextureAtlas("image/atlas/player/idle.atlas");
+            atlasPIdle = Application.assetManager.get(ATLAS_PLAYER_IDLE, TextureAtlas.class);
             animPIdle = new Animation<TextureRegion>(1f/10f, atlasPIdle.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPUp == null) {
-            atlasPUp = new TextureAtlas("image/atlas/player/up.atlas");
+            atlasPUp = Application.assetManager.get(ATLAS_PLAYER_UP, TextureAtlas.class);
             animPUp = new Animation<TextureRegion>(1f/10f, atlasPUp.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPDown == null) {
-            atlasPDown = new TextureAtlas("image/atlas/player/down.atlas");
+            atlasPDown = Application.assetManager.get(ATLAS_PLAYER_DOWN, TextureAtlas.class);
             animPDown = new Animation<TextureRegion>(1f/10f, atlasPDown.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPRight == null) {
-            atlasPRight = new TextureAtlas("image/atlas/player/right.atlas");
+            atlasPRight = Application.assetManager.get(ATLAS_PLAYER_RIGHT, TextureAtlas.class);
             animPRight = new Animation<TextureRegion>(1f/10f, atlasPRight.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPLeft == null) {
-            atlasPLeft = new TextureAtlas("image/atlas/player/left.atlas");
+            atlasPLeft = Application.assetManager.get(ATLAS_PLAYER_LEFT, TextureAtlas.class);
             animPLeft = new Animation<TextureRegion>(1f/10f, atlasPLeft.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPAttack == null) {
-            atlasPAttack = new TextureAtlas("image/atlas/player/attack.atlas");
+            atlasPAttack = Application.assetManager.get(ATLAS_PLAYER_ATTACK, TextureAtlas.class);
             animPAttack = new Animation<TextureRegion>(1f/10f, atlasPAttack.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPAttackRight == null) {
-            atlasPAttackRight = new TextureAtlas("image/atlas/player/attackRight.atlas");
+            atlasPAttackRight = Application.assetManager.get(ATLAS_PLAYER_ATTACK_R, TextureAtlas.class);
             animPAttackRight = new Animation<TextureRegion>(1f/10f, atlasPAttackRight.findRegions("frame"), Animation.PlayMode.LOOP);
         }
         if (atlasPAttackLeft == null) {
-            atlasPAttackLeft = new TextureAtlas("image/atlas/player/attackLeft.atlas");
+            atlasPAttackLeft = Application.assetManager.get(ATLAS_PLAYER_ATTACK_L, TextureAtlas.class);
             animPAttackLeft = new Animation<TextureRegion>(1f/10f, atlasPAttackLeft.findRegions("frame"), Animation.PlayMode.LOOP);
         }
     }
@@ -85,7 +83,6 @@ public abstract class GameObject {
         if (atlasPAttack != null) atlasPAttack.dispose();
         if (atlasPAttackRight != null) atlasPAttackRight.dispose();
         if (atlasPAttackLeft != null) atlasPAttackLeft.dispose();
-        if (texBulletOne != null) texBulletOne.dispose();
     }
 
     public Rectangle getBounds() {

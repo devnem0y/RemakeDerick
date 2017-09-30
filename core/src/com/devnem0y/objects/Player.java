@@ -24,7 +24,7 @@ public class Player extends GameObject {
     private AnimStateMachine animStateMachine;
     private float animDt = 0f;
     private int command;
-    private int fireCount = 0;
+    private int fireCount;
     private boolean superFire;
     private int rockets;
 
@@ -91,6 +91,7 @@ public class Player extends GameObject {
                 else setState(new Idle());
             }
             if (controller.isBtnAInput()) fire();
+            else fireCount = 14;
             if (controller.isBtnBInput()) fRocket();
 
             if (bounds.y + bounds.getHeight() >= APP_HEIGHT) bounds.y = APP_HEIGHT - bounds.getHeight();
@@ -108,7 +109,7 @@ public class Player extends GameObject {
 
     private void fire() {
         fireCount++;
-        if (fireCount > 10) {
+        if (fireCount > 15) {
             fireCount = 0;
             if (superFire) {
                 for (GameObject bt : bulletsTow) {

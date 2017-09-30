@@ -2,8 +2,10 @@ package com.devnem0y.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.devnem0y.Application;
 
 import static com.devnem0y.utils.Constants.*;
+import static com.devnem0y.utils.PathRes.*;
 
 public class Background {
 
@@ -12,8 +14,8 @@ public class Background {
     private int starsCount = 70;
 
     public Background() {
-        texBg = new Texture("image/background.png");
-        texStar = new Texture("image/star.png");
+        texBg = Application.assetManager.get(BACKGROUND, Texture.class);
+        texStar = Application.assetManager.get(STAR, Texture.class);
         stars = new Star[starsCount];
         for(int i = 0; i < starsCount; i++) {
             stars[i] = new Star();

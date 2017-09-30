@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 
 import static com.devnem0y.utils.Constants.*;
+import static com.devnem0y.utils.PathRes.ATLAS_BUTTONS;
 
 public class MenuGUI {
 
@@ -27,7 +28,7 @@ public class MenuGUI {
     public MenuGUI(BitmapFont fontLabel) {
         this.fontLabel = fontLabel;
         skin = new Skin();
-        skin.addRegions(new TextureAtlas(Gdx.files.internal("image/atlas/buttons.atlas")));
+        skin.addRegions(new TextureAtlas(Gdx.files.internal(ATLAS_BUTTONS)));
     }
 
     public void initialization(Stage stage) {
