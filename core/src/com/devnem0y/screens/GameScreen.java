@@ -84,7 +84,7 @@ public class GameScreen extends AbstractScreen {
             bulletsTow[i].spawn(null, null, null);
         }
         rockets.spawn(null, null, null);
-        player.spawn(null, null, null, bulletsOne, bulletsTow, rockets);
+        player.spawn(asteroids, null, null, bulletsOne, bulletsTow, rockets);
         for (int i = 0; i < asteroids.length; i++) {
             asteroids[i] = new Asteroid();
             asteroids[i].spawn(player, null, bulletsOne, bulletsTow, rockets);

@@ -18,6 +18,7 @@ public class Asteroid extends GameObject {
     private TextureAtlas atlas;
     private Sprite sprite;
     private float degrees;
+    private float timer = 0f;
 
     public Asteroid() {
         bounds = new Rectangle();
@@ -38,6 +39,7 @@ public class Asteroid extends GameObject {
 
     private void recreate() {
         sprite = new Sprite(atlas.findRegion("asteroid", MathUtils.random(1, 5)));
+        sprite.setPosition(bounds.getX(), bounds.getY());
         bounds.setPosition(MathUtils.random(APP_WIDTH), APP_HEIGHT + MathUtils.random(300));
         velocity = 50 + (float)Math.random() * 120;
         degrees = MathUtils.random(-10, 10);
@@ -52,16 +54,21 @@ public class Asteroid extends GameObject {
             bounds.y -= velocity * delta;
 //            if (bounds.overlaps(asteroid.getBounds()) || bounds.overlaps(bonus.getBounds()) ||
 //                    bounds.overlaps(enemy.getBounds()) || bounds.overlaps(boss.getBounds())) alive = false;
-            if (bounds.getY() + bounds.getHeight() < 0) {
-                alive = false;
-                recreate();
-            }
+
             for (GameObject b : bulletOne) {
                 if (bounds.overlaps(b.getBounds())) {
                     System.out.println("BOOM!");
                 }
             }
 
+            if ((bounds.getY() + bounds.getHeight() < 0) || (bounds.overlaps(player.getBounds()))) alive = false;
+
+        } else {
+            if (timer > 0.5) {
+                timer = 0f;
+                recreate();
+            }
+            timer += delta;
         }
     }
 

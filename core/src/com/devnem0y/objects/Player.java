@@ -1,5 +1,6 @@
 package com.devnem0y.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.devnem0y.handlers.input.Controller;
@@ -23,7 +24,7 @@ public class Player extends GameObject {
     private Controller controller;
     private float posX, posY;
     private AnimStateMachine animStateMachine;
-    private float animDt = 0f;
+    private float animDt = 0f, animDeathTimer = 0f;
     private int command;
     private int fireCount;
     private boolean superFire;
@@ -68,7 +69,7 @@ public class Player extends GameObject {
         if (command == 0) {
             if (bounds.getY() <= 110) {
                 bounds.setY(bounds.getY() + velocity * delta);
-            }
+            } else command = 1;
         } else if (command == 1) {
             if (alive) {
                 if (controller.getTouchpad().isTouched()) {
@@ -106,14 +107,21 @@ public class Player extends GameObject {
                     bounds.x = APP_WIDTH - bounds.getWidth();
                 else if (bounds.x <= 0) bounds.x = 0;
 
-//                for (GameObject a : asteroid) {
-//                    if (a.isAlive()) {
-//                        if (bounds.overlaps(a.getBounds())) {
-//                            setState(new Death());
-//                            alive = false;
-//                        }
-//                    }
-//                }
+                for (GameObject a : asteroid) {
+                    if (bounds.overlaps(a.getBounds())) {
+                        setState(new Death());
+                        alive = false;
+                        animDt = 0;
+                    }
+                }
+            } else {
+                if (animDeathTimer > 0.5f) {
+                    animDeathTimer = 0f;
+                    alive = true;
+                    setState(new Idle());
+                    establishPosition(50);
+                }
+                animDeathTimer += Gdx.graphics.getDeltaTime();
             }
         }
     }
