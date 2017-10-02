@@ -11,6 +11,7 @@ import com.devnem0y.Application;
 import com.devnem0y.handlers.input.Controller;
 import com.devnem0y.handlers.input.MenuGUI;
 import com.devnem0y.managers.DialogManager;
+import com.devnem0y.objects.Asteroid;
 import com.devnem0y.objects.Background;
 import com.devnem0y.objects.Bullet;
 import com.devnem0y.objects.Player;
@@ -27,6 +28,7 @@ public class GameScreen extends AbstractScreen {
     private MenuGUI menuGUI;
     public static DialogManager dialogManager;
     private Controller controller;
+    private Label infoRocket;
 
     // Game objects
     private Background bg;
@@ -35,7 +37,8 @@ public class GameScreen extends AbstractScreen {
     private Bullet[] bulletsOne;
     private Bullet[] bulletsTow;
     private Bullet rockets;
-    private Label infoRocket;
+    private Asteroid[] asteroids;
+
 
     public GameScreen(final Application app) {
         super(app);
@@ -68,19 +71,24 @@ public class GameScreen extends AbstractScreen {
         bulletsTow = new Bullet[5];
         rockets = new Bullet(ROCKET, 16f, 30f, 350f, 20);
         playerBase = new PlayerBase();
+        asteroids = new Asteroid[4];
     }
 
     private void spawnObjects() {
         for (int i = 0; i < bulletsOne.length; i++) {
             bulletsOne[i] = new Bullet(BULLET_1, 6f, 17f, 900f, 1);
-            bulletsOne[i].spawn(null, null, null, null);
+            bulletsOne[i].spawn(null, null, null);
         }
         for (int i = 0; i < bulletsTow.length; i++) {
             bulletsTow[i] = new Bullet(BULLET_2, 16f, 24f, 900f, 2);
-            bulletsTow[i].spawn(null, null, null, null);
+            bulletsTow[i].spawn(null, null, null);
         }
-        rockets.spawn(null, null, null, null);
-        player.spawn(null, null, bulletsOne, bulletsTow, rockets);
+        rockets.spawn(null, null, null);
+        player.spawn(null, null, null, bulletsOne, bulletsTow, rockets);
+        for (int i = 0; i < asteroids.length; i++) {
+            asteroids[i] = new Asteroid();
+            asteroids[i].spawn(player, null, bulletsOne, bulletsTow, rockets);
+        }
     }
 
     private void createInterface() {
@@ -160,6 +168,10 @@ public class GameScreen extends AbstractScreen {
         rockets.update(delta);
         rockets.render(batch, delta);
         infoRocket.setText("ROCKETS: " + player.getRockets());
+        for (Asteroid a : asteroids) {
+            a.update(delta);
+            a.render(batch, delta);
+        }
         pauseGame();
     }
 
@@ -236,5 +248,8 @@ public class GameScreen extends AbstractScreen {
             if (bt != null) bt.dispose();
         }
         if (rockets != null) rockets.dispose();
+        for (Asteroid a : asteroids) {
+            if (a != null) a.dispose();
+        }
     }
 }

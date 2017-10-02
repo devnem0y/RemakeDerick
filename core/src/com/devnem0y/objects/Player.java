@@ -7,6 +7,7 @@ import com.devnem0y.objects.animations.AnimStateMachine;
 import com.devnem0y.objects.animations.Attack;
 import com.devnem0y.objects.animations.AttackLeft;
 import com.devnem0y.objects.animations.AttackRight;
+import com.devnem0y.objects.animations.Death;
 import com.devnem0y.objects.animations.Down;
 import com.devnem0y.objects.animations.Idle;
 import com.devnem0y.objects.animations.Left;
@@ -17,8 +18,8 @@ import static com.devnem0y.utils.Constants.*;
 
 public class Player extends GameObject {
 
-    private GameObject asteroid, enemy, bonus, rocket;
-    private GameObject[] bulletsOne, bulletsTow;
+    private GameObject rocket;
+    private GameObject[] bulletsOne, bulletsTow, asteroid, bomb, bonus;
     private Controller controller;
     private float posX, posY;
     private AnimStateMachine animStateMachine;
@@ -44,9 +45,10 @@ public class Player extends GameObject {
     private void running(SpriteBatch batch, float dt) {animStateMachine.running(this, batch, dt);}
 
     @Override
-    public void spawn(GameObject object_0, GameObject object_1, GameObject[] bulletsOne, GameObject[] bulletsTow, GameObject rocket) {
-        this.asteroid = object_0;
-        this.enemy = object_1;
+    public void spawn(GameObject[] asteroid, GameObject[] bomb, GameObject[] bonus, GameObject[] bulletsOne, GameObject[] bulletsTow, GameObject rocket) {
+        this.asteroid = asteroid;
+        this.bomb = bomb;
+        this.bonus = bonus;
         this.bulletsOne = bulletsOne;
         this.bulletsTow = bulletsTow;
         this.rocket = rocket;
@@ -68,36 +70,51 @@ public class Player extends GameObject {
                 bounds.setY(bounds.getY() + velocity * delta);
             }
         } else if (command == 1) {
-            if (controller.getTouchpad().isTouched()) {
-                bounds.setX(bounds.getX() + controller.getTouchpad().getKnobPercentX() * (velocity * delta));
-                bounds.setY(bounds.getY() + controller.getTouchpad().getKnobPercentY() * (velocity * delta));
-                if (controller.getTouchpad().getKnobX() == controller.getTouchpad().getWidth() / 2) {
-                    if (controller.isBtnAInput()) {
-                        if (controller.getTouchpad().getKnobY() > posY) setState(new Attack());
-                        else if (controller.getTouchpad().getKnobY() < posY) setState(new Attack());
-                    } else {
-                        if (controller.getTouchpad().getKnobY() > posY) setState(new Up());
-                        else if (controller.getTouchpad().getKnobY() < posY) setState(new Down());
+            if (alive) {
+                if (controller.getTouchpad().isTouched()) {
+                    bounds.setX(bounds.getX() + controller.getTouchpad().getKnobPercentX() * (velocity * delta));
+                    bounds.setY(bounds.getY() + controller.getTouchpad().getKnobPercentY() * (velocity * delta));
+                    if (controller.getTouchpad().getKnobX() == controller.getTouchpad().getWidth() / 2) {
+                        if (controller.isBtnAInput()) {
+                            if (controller.getTouchpad().getKnobY() > posY) setState(new Attack());
+                            else if (controller.getTouchpad().getKnobY() < posY)
+                                setState(new Attack());
+                        } else {
+                            if (controller.getTouchpad().getKnobY() > posY) setState(new Up());
+                            else if (controller.getTouchpad().getKnobY() < posY)
+                                setState(new Down());
+                        }
+                    } else if (controller.getTouchpad().getKnobX() > posX + 35) {
+                        if (controller.isBtnAInput()) setState(new AttackRight());
+                        else setState(new Right());
+                    } else if (controller.getTouchpad().getKnobX() < posX - 35) {
+                        if (controller.isBtnAInput()) setState(new AttackLeft());
+                        else setState(new Left());
                     }
-                } else if (controller.getTouchpad().getKnobX() > posX + 35) {
-                    if (controller.isBtnAInput()) setState(new AttackRight());
-                    else setState(new Right());
-                } else if (controller.getTouchpad().getKnobX() < posX - 35) {
-                    if (controller.isBtnAInput()) setState(new AttackLeft());
-                    else setState(new Left());
+                } else {
+                    if (controller.isBtnAInput()) setState(new Attack());
+                    else setState(new Idle());
                 }
-            } else {
-                if (controller.isBtnAInput()) setState(new Attack());
-                else setState(new Idle());
-            }
-            if (controller.isBtnAInput()) fire();
-            else fireCount = 14;
-            if (controller.isBtnBInput()) fRocket();
+                if (controller.isBtnAInput()) fire();
+                else fireCount = 14;
+                if (controller.isBtnBInput()) fRocket();
 
-            if (bounds.y + bounds.getHeight() >= APP_HEIGHT) bounds.y = APP_HEIGHT - bounds.getHeight();
-            else if (bounds.y <= 0) bounds.y = 0;
-            if (bounds.x + bounds.getWidth() >= APP_WIDTH) bounds.x = APP_WIDTH - bounds.getWidth();
-            else if (bounds.x <= 0) bounds.x = 0;
+                if (bounds.y + bounds.getHeight() >= APP_HEIGHT)
+                    bounds.y = APP_HEIGHT - bounds.getHeight();
+                else if (bounds.y <= 0) bounds.y = 0;
+                if (bounds.x + bounds.getWidth() >= APP_WIDTH)
+                    bounds.x = APP_WIDTH - bounds.getWidth();
+                else if (bounds.x <= 0) bounds.x = 0;
+
+//                for (GameObject a : asteroid) {
+//                    if (a.isAlive()) {
+//                        if (bounds.overlaps(a.getBounds())) {
+//                            setState(new Death());
+//                            alive = false;
+//                        }
+//                    }
+//                }
+            }
         }
     }
 

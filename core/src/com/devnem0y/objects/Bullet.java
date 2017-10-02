@@ -8,7 +8,8 @@ import static com.devnem0y.utils.Constants.*;
 
 public class Bullet extends GameObject {
 
-    private GameObject asteroid, enemy, bonus, boss;
+    private GameObject[] asteroid, bomb;
+    private GameObject boss;
     private Texture texture;
     private int damage;
 
@@ -22,10 +23,9 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    public void spawn(GameObject asteroid, GameObject bonus, GameObject enemy, GameObject boss) {
+    public void spawn(GameObject[] asteroid, GameObject[] bomb, GameObject boss) {
         this.asteroid = asteroid;
-        this.bonus = bonus;
-        this.enemy = enemy;
+        this.bomb = bomb;
         this.boss = boss;
     }
 
@@ -40,7 +40,7 @@ public class Bullet extends GameObject {
             bounds.y += velocity * delta;
 //            if (bounds.overlaps(asteroid.getBounds()) || bounds.overlaps(bonus.getBounds()) ||
 //                    bounds.overlaps(enemy.getBounds()) || bounds.overlaps(boss.getBounds())) alive = false;
-            if (bounds.getY() > APP_WIDTH) alive = false;
+            if (bounds.getY() > APP_HEIGHT) alive = false;
         }
     }
 
