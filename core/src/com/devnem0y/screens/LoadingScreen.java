@@ -62,6 +62,7 @@ public class LoadingScreen extends AbstractScreen{
 		app.assetManager.load(ATLAS_PLAYER_ATTACK, TextureAtlas.class);
 		app.assetManager.load(ATLAS_PLAYER_ATTACK_R, TextureAtlas.class);
 		app.assetManager.load(ATLAS_PLAYER_ATTACK_L, TextureAtlas.class);
+		app.assetManager.load(ATLAS_ASTEROID_CRASH, TextureAtlas.class);
         app.assetManager.finishLoading();
     }
 

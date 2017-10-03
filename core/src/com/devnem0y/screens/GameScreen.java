@@ -153,7 +153,6 @@ public class GameScreen extends AbstractScreen {
 
     private void play(float delta, SpriteBatch batch) {
         bg.update(delta);
-        player.setCommand(1);
         controller.group.addAction(Actions.moveTo(0, 0, 0.7f));
         player.update(delta);
         player.render(batch, delta);

@@ -1,5 +1,6 @@
 package com.devnem0y.objects;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,12 +13,14 @@ import static com.devnem0y.utils.PathRes.*;
 public abstract class GameObject {
 
     protected Rectangle bounds;
-    TextureAtlas atlasPDeath, atlasPIdle, atlasPUp, atlasPDown, atlasPRight, atlasPLeft, atlasPAttack, atlasPAttackRight, atlasPAttackLeft;
-    Animation animPDeath, animPIdle, animPUp, animPDown, animPRight, animPLeft, animPAttack, animPAttackRight, animPAttackLeft;
+    TextureAtlas atlasPDeath, atlasPIdle, atlasPUp, atlasPDown, atlasPRight, atlasPLeft, atlasPAttack, atlasPAttackRight, atlasPAttackLeft, atlasAsteroidCrash;
+    Animation animPDeath, animPIdle, animPUp, animPDown, animPRight, animPLeft, animPAttack, animPAttackRight, animPAttackLeft, animAsteroidCrash;
+    Sprite spriteAsteroid;
     protected float velocity;
     protected boolean alive;
 
     public GameObject() {
+        spriteAsteroid = new Sprite();
         animInit();
     }
 
@@ -58,6 +61,10 @@ public abstract class GameObject {
             atlasPAttackLeft = Application.assetManager.get(ATLAS_PLAYER_ATTACK_L, TextureAtlas.class);
             animPAttackLeft = new Animation<TextureRegion>(1f/10f, atlasPAttackLeft.findRegions("frame"), Animation.PlayMode.LOOP);
         }
+        if (atlasAsteroidCrash == null) {
+            atlasAsteroidCrash = Application.assetManager.get(ATLAS_ASTEROID_CRASH, TextureAtlas.class);
+            animAsteroidCrash = new Animation<TextureRegion>(1f/10f, atlasAsteroidCrash.findRegions("frame"), Animation.PlayMode.LOOP);
+        }
     }
 
     public void spawn(GameObject[] object_0, GameObject[] object_1, GameObject object_2) {}
@@ -81,6 +88,7 @@ public abstract class GameObject {
         if (atlasPAttack != null) atlasPAttack.dispose();
         if (atlasPAttackRight != null) atlasPAttackRight.dispose();
         if (atlasPAttackLeft != null) atlasPAttackLeft.dispose();
+        if (atlasAsteroidCrash != null) atlasAsteroidCrash.dispose();
     }
 
     public Rectangle getBounds() {
@@ -143,5 +151,11 @@ public abstract class GameObject {
         return animPAttackLeft;
     }
 
+    public Animation getAnimAsteroidCrash() {
+        return animAsteroidCrash;
+    }
 
+    public Sprite getSpriteAsteroid() {
+        return spriteAsteroid;
+    }
 }

@@ -71,6 +71,12 @@ public class Player extends GameObject {
                 bounds.setY(bounds.getY() + velocity * delta);
             } else command = 1;
         } else if (command == 1) {
+            if (bounds.y + bounds.getHeight() >= APP_HEIGHT)
+                bounds.y = APP_HEIGHT - bounds.getHeight();
+//            else if (bounds.y <= 0) bounds.y = 0;
+            if (bounds.x + bounds.getWidth() >= APP_WIDTH)
+                bounds.x = APP_WIDTH - bounds.getWidth();
+            else if (bounds.x <= 0) bounds.x = 0;
             if (alive) {
                 if (controller.getTouchpad().isTouched()) {
                     bounds.setX(bounds.getX() + controller.getTouchpad().getKnobPercentX() * (velocity * delta));
@@ -100,13 +106,6 @@ public class Player extends GameObject {
                 else fireCount = 14;
                 if (controller.isBtnBInput()) fRocket();
 
-                if (bounds.y + bounds.getHeight() >= APP_HEIGHT)
-                    bounds.y = APP_HEIGHT - bounds.getHeight();
-                else if (bounds.y <= 0) bounds.y = 0;
-                if (bounds.x + bounds.getWidth() >= APP_WIDTH)
-                    bounds.x = APP_WIDTH - bounds.getWidth();
-                else if (bounds.x <= 0) bounds.x = 0;
-
                 for (GameObject a : asteroid) {
                     if (bounds.overlaps(a.getBounds())) {
                         setState(new Death());
@@ -119,9 +118,10 @@ public class Player extends GameObject {
                     animDeathTimer = 0f;
                     alive = true;
                     setState(new Idle());
-                    establishPosition(50);
+                    command = 0;
+                    establishPosition(-100);
                 }
-                animDeathTimer += Gdx.graphics.getDeltaTime();
+                animDeathTimer += delta;
             }
         }
     }
