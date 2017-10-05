@@ -23,4 +23,5 @@ public class PathRes {
     public static final String ATLAS_PLAYER_ATTACK = "image/atlas/player/attack.atlas";
     public static final String ATLAS_PLAYER_ATTACK_R = "image/atlas/player/attackRight.atlas";
     public static final String ATLAS_PLAYER_ATTACK_L = "image/atlas/player/attackLeft.atlas";
+    public static final String ATLAS_ASTEROID_CRASH = "image/atlas/asteroidCrash.atlas";
 }
